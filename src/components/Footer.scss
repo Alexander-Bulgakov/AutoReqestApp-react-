@@ -1,0 +1,19 @@
+$height: 95px;
+
+.footer-container {
+  width: 100%;
+  height: $height;
+  background-color: #f6f9f9;
+  // grid-area: f;
+  position: fixed;
+  bottom: 0;
+  &__content {
+    position: absolute;
+    left: 220px;
+    height: 100%;
+    line-height: $height;
+    color: #999999;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    font-size: 14px;
+  }
+}
