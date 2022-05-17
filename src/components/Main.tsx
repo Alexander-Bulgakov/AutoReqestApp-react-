@@ -1,19 +1,20 @@
 import React from 'react';
 import './Main.scss';
-import Button from '@mui/material/Button';
-import RequestsList from './RequestsList';
+
+import { Routes, Route } from 'react-router-dom';
+
+import RequestForm from '../pages/RequestForm';
+import RequestsList from '../pages/RequestsList';
+import NotFound from '../pages/NotFound';
 
 export default function Main(): JSX.Element {
   return (
     <div className="main-container">
-      <div className="content-container">
-        <div className="main-header">
-          <h1 className="main-header__title">Список заявок</h1>
-          <p className="main-header__description">Ваши заявки на покупку автомобилей</p>
-        </div>
-        <RequestsList />
-        <Button variant="contained">Создать заявку</Button>
-      </div>
+      <Routes>
+        <Route path="/" element={<RequestsList />} />
+        <Route path="/request" element={<RequestForm />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

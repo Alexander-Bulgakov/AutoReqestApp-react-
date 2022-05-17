@@ -4,9 +4,8 @@ $height: 95px;
   width: 100%;
   height: $height;
   background-color: #f6f9f9;
-  // grid-area: f;
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 0px;
   &__content {
     position: absolute;
     left: 220px;

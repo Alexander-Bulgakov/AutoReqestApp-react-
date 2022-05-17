@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "server": "json-server -w ./server/cities.json --port 3000",
     "clean": "rimraf ./dist",
     "start": "npm run clean & webpack-dev-server --config ./webpack/webpack.config.dev.js",
     "build": "npm run clean & webpack --config ./webpack/webpack.config.prod.js",
@@ -16,8 +17,10 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.6.4",
+    "axios": "^0.27.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-hook-form": "^7.31.0",
     "react-router-dom": "^6.3.0",
     "typescript": "^4.6.4"
   },
@@ -36,6 +39,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
     "html-webpack-plugin": "^5.5.0",
+    "json-server": "^0.17.0",
     "rimraf": "^3.0.2",
     "sass": "^1.51.0",
     "sass-loader": "^12.6.0",

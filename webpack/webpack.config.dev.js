@@ -6,5 +6,11 @@ module.exports = (env) => merge(baseConfig, {
   devServer: {
     hot: true,
     port: 9000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '/api': '' },
+      }
+    }
   },
 });
