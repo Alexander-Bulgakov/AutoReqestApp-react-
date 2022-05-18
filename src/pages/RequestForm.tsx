@@ -5,17 +5,28 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Input from '@mui/material/Input';
 import axios from 'axios';
 import SelectUI from '../components/SelectUI';
-import { City } from '../types/types';
+import { Request, City } from '../types/types';
+// import { myTimer } from 'store/Selects.store';
+// import { observer } from "mobx-react-lite";
+// import { City } from '../types/types';
 
-export default function RequestForm() {
+const RequestForm = () => {
   const [cities, setСity] = useState<City[]>([]);
+  // const [autoBrands, setBrand] = useState([]);
   useEffect(() => {
-    axios.get<City[]>('/api/items')
+    axios.get<Request>('/reg_service/api/v1/dictionary/DICT_AUTO')
       .then((result) => {
-        // console.log(result.data);
-        setСity(result.data);
+        console.log(result.data.items);
+        setСity(result.data.items);
       });
   }, []);
+  // useEffect(() => {
+  //   axios.get<Auto>('/api/dictionary/DICT_AUTO')
+  //     .then((result) => {
+  //       console.log(result.data.items);
+  //       // setBrand(result.data.items);
+  //     });
+  // }, []);
   return (
     <div className="content-container">
       <div className="main-header">
@@ -38,3 +49,5 @@ export default function RequestForm() {
     </div>
   );
 }
+
+export default RequestForm;

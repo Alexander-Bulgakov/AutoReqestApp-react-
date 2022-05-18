@@ -14,8 +14,8 @@ export default function RequestsList(): JSX.Element {
       <div className="requests-list">
         <ul>
           {
-            requestsArray.map((request) => (
-              <li>
+            requestsArray.map((request, i) => (
+              <li key={i}>
                 {request}
               </li>
             ))

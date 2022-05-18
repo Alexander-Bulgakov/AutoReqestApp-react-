@@ -4,7 +4,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.scss';
 
-export default function App(): JSX.Element {
+// export default function App(): JSX.Element {
+const App = () => {
   return (
     <div className="container">
       <Header />
@@ -13,3 +14,5 @@ export default function App(): JSX.Element {
     </div>
   );
 }
+
+export default App;
