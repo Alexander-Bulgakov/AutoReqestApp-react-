@@ -11,8 +11,12 @@ app.listen(port, () => {
   console.log(`Listening port ${port}`);
 })
 
-app.get('/reg_service/api/v1/dictionary/DICT_AUTO', (req, res) => {
+app.get('/reg_service/api/v1/dictionary/DICT_CITIES', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'server', 'cities.json'));
+})
+
+app.get('/reg_service/api/v1/dictionary/DICT_AUTO', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'server', 'auto.json'));
 })
 
 app.use(express.static(path.resolve(__dirname, 'server')));

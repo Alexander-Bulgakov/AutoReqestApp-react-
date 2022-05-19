@@ -3,6 +3,10 @@ export interface Props {
   title: string,
   items: City[]
 }
+export interface PropsModels {
+  title: string,
+  items: string[]
+}
 
 export interface City {
   code: string,
