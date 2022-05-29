@@ -3,52 +3,56 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Input from '@mui/material/Input';
-import axios from 'axios';
 import SelectUI from '../components/SelectUI';
-import { Request, City } from '../types/types';
-// import { myTimer } from 'store/Selects.store';
-// import { observer } from "mobx-react-lite";
-import { AutoDict } from '../types/types';
-import Selectbrands from '../components/SelectBrands';
+import { City } from '../types/types';
+import { observer } from "mobx-react-lite";
+// import { AutoDict } from '../types/types';
+import SelectBrands from '../components/SelectBrands';
+import SelectModels from '../components/SelectModels';
+import { useGetCities, request } from '../API';
+import { myBrand } from '../store/selectBrand.store';
+// import { toJS } from 'mobx';
 
-const RequestForm = () => {
-
-  const baseDictionariesURL = '/reg_service/api/v1/dictionary/';
-  const citiesID = 'DICT_CITIES';
-  const brandsID = 'DICT_AUTO';
+const RequestForm = observer(() => {
+  
   const [cities, setСity] = useState<City[]>([]);
-  const [autoBrands, setBrand] = useState([]);
+
+  const [autoBrands, setBrands] = useState<any>([]);
+  // const [models, setModel] = useState([]);
+
   useEffect(() => {
-    const reqData = async () => {
-      const result = await axios.get<Request>(baseDictionariesURL + citiesID);
-          setСity(result.data.items);
-    }
-    reqData();
+    useGetCities('/reg_service/api/v1/dictionary/DICT_CITIES')
+      .then(res => setСity(res));
   }, []);
 
-  const autoArr: any = [];
   useEffect(() => {
-    const brandsRequest = async () => {
-      const result = await axios.get<AutoDict, any>(baseDictionariesURL + brandsID);
-      const brandsArr = result.data;
-      // console.log('brandsArr >>> ', brandsArr);
-      brandsArr.map((item: {}) => {
-        autoArr.push(...Object.keys(item))
-      });
-      setBrand(autoArr);
-    }
-    brandsRequest();
+    request('/reg_service/api/v1/dictionary/DICT_AUTO')
+      .then(res => {
+        const obj: {} = res.reduce((acc: any, val: any) => {
+          const key = Object.keys(val)[0];
+          acc[key] = val[key];
+          return acc
+        }, {})
+        return obj
+      })
+      .then(obj => {
+        myBrand.setAutoDict(obj);
+        setBrands(Object.keys(obj));
+        console.log('собрали объект с бэка в форме - reduce >> ', obj);
+      })
   }, []);
-  // console.log(autoBrands);
+
   // useEffect(() => {
-  //   axios.get<ServerResponse, []>('/reg_service/api/v1/dictionary/DICT_AUTO')
-  //     .then((result) => {
-  //       result.map(item => {
-  //         autoArr.push(...Object.keys(item))
-  //       });
-  //       setBrand(autoArr);
-  //   });
-  // }, []);
+  //   const obj = toJS(myBrand.autoDict);
+  //   console.log('obj >> ', obj[myBrand.brand]);
+  //   myBrand.modelChange(obj[myBrand.brand]);
+  // }, [myBrand.brand])
+
+  // useEffect(() => {
+  //   console.log('models req from store', toJS(myBrand.models));
+  //   // setModel(toJS(myBrand.models));
+  // }, [myBrand.models])
+
   const handleSubmitSend = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Форма отправлена');
@@ -66,14 +70,14 @@ const RequestForm = () => {
         <Input placeholder="Email" className="field form-container__input4" disableUnderline />
         <Input placeholder="Водительское удостоверение" className="field form-container__input5" disableUnderline />
         <SelectUI title="Город" items={cities} />
-        <Selectbrands title="Марка автомобиля" items={autoBrands} />
-        <SelectUI title="Модель" items={[]} />
+        <SelectBrands title="Марка автомобиля" items={autoBrands} />
+        <SelectModels title="Модель" />
         <FormControlLabel control={<Checkbox />} label="Согласен на обработку персональных данных" className="checkbox" />
         <Button type="submit" variant="contained">Сохранить</Button>
         <Button type="submit" variant="contained">Отправить на регистрацию</Button>
       </form>
     </div>
   );
-}
+})
 
 export default RequestForm;

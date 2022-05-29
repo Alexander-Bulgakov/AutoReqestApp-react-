@@ -5,7 +5,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Props } from '../types/types';
 
-export default function SelectUI({ title, items }: Props ): JSX.Element {
+const SelectUI = ({ title, items }: Props ): JSX.Element => {
   const [value, setValue] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string);
@@ -30,3 +30,5 @@ export default function SelectUI({ title, items }: Props ): JSX.Element {
     </FormControl>
   );
 }
+
+export default SelectUI;

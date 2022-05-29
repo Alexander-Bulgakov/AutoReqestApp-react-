@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+// import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { observer } from 'mobx-react-lite';
+import { myBrand } from '../store/selectBrand.store';
+import { toJS } from 'mobx';
 // import { PropsModels } from '../types/types';
 
-export default function SelectModels({ title, items }: any ): JSX.Element {
-  const [value, setValue] = useState('');
+const SelectBrands = ({ title, items }: any ): JSX.Element => {
+
   const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value as string);
-    console.log(event.target.value);
+    myBrand.brandChange(event);
+    const obj = toJS(myBrand.autoDict);
+    myBrand.modelChange(obj[myBrand.brand]);
   };
-  // console.log('items >> ', items);
+
   return (
     <FormControl fullWidth>
       <InputLabel>{title}</InputLabel>
@@ -20,7 +25,8 @@ export default function SelectModels({ title, items }: any ): JSX.Element {
         className="select"
         labelId="demo-simple-select-label"
         // id="demo-simple-select"
-        value={value}
+        // value={myBrand.brand}
+        defaultValue=""
         // label="Марка автомобиля"
         onChange={handleChange}
         variant="filled"
@@ -32,3 +38,5 @@ export default function SelectModels({ title, items }: any ): JSX.Element {
     </FormControl>
   );
 }
+
+export default observer(SelectBrands);
