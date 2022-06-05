@@ -22,7 +22,7 @@ export default function RequestsList(): JSX.Element {
           }
         </ul>
       </div>
-      <Link to="/request">
+      <Link to="/DRAFT">
         <Button variant="contained">Создать заявку</Button>
       </Link>
     </div>

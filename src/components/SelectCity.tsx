@@ -1,55 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { observer } from 'mobx-react-lite';
-import { MenuItem } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
 import { myBrand } from '../store/selectBrand.store';
-import { toJS } from 'mobx';
+// import { Props } from '../types/types';
+import { City } from '../types/types';
 
-const SelectModels = ({ title, register }: any ): JSX.Element => {
+
+const SelectCity = ({ title, register }: any ): JSX.Element => {
   const [value, setValue] = useState('');
-  const [models, setModels] = useState([]);
+  const [items, setItems] = useState<City[]>([]);
 
+  useEffect(() => {
+    myBrand.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
+      .then(res => setItems(res));
+  }, [])
 
-  // обработчик значения селекта после выбора
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string);
   };
 
-  useEffect(() => {
-    setValue('');
-    const obj = toJS(myBrand.autoDict);
-    const arr = obj[myBrand.brand];
-    console.log('arr', arr);
-    setModels(arr);
-  }, [myBrand.brand])
+  console.log('items, city >> ', items);
 
   return (
     <FormControl fullWidth>
       <InputLabel>{title}</InputLabel>
       <Select
         { ...register(
-          "auto.model"
+          "city"
         )}
+        required
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
         // id="demo-simple-select"
         value={value}
         label={title}
-        defaultValue=""
         onChange={handleChange}
         variant="filled"
         disableUnderline
       >
-        {models?.length && models.map((item: any) => (
-          <MenuItem key={item.id} value={item}>{item.name}</MenuItem>
+        {items.map((city: any) => (
+          <MenuItem key={city.code} value={city}>{city.name}</MenuItem>
         ))}
-
       </Select>
     </FormControl>
   );
 }
 
-export default observer(SelectModels);
+export default SelectCity;

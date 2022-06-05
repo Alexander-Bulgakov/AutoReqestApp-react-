@@ -12,7 +12,7 @@ export default function Main(): JSX.Element {
     <div className="main-container">
       <Routes>
         <Route path="/" element={<RequestsList />} />
-        <Route path="/request" element={<RequestForm />} />
+        <Route path="/DRAFT" element={<RequestForm />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
