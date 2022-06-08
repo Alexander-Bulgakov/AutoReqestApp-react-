@@ -44,6 +44,7 @@ const RequestForm = observer(() => {
 
   const handleChangeInput = (event: any) => {
     // const value = event.target.value;
+    // if (event.target.id === '')
     setValue(event.target.value);
     // console.log(event.target.value);
   }
@@ -114,7 +115,7 @@ const RequestForm = observer(() => {
           placeholder="Отчество"
           className="field form-container__input3"
           sx={{ input: { bgcolor: "background.paper" } }}
-          error={!!errors?.patronymicName}
+          error={!!errors?.secondName}
           { ...register(
             "secondName",
             // "person.secondName",
@@ -190,8 +191,8 @@ const RequestForm = observer(() => {
           control={<Checkbox required />} 
           label="Согласен на обработку персональных данных" 
           className="checkbox" />
-        <Button type="submit" variant="contained">Сохранить</Button>
-        <Button type="submit" variant="contained">Отправить на регистрацию</Button>
+        <Button type="submit" variant="contained" id='saveButton'>Сохранить</Button>
+        <Button type="submit" variant="contained" id='registerButton'>Отправить на регистрацию</Button>
         {/* disabled={!isValid} */}
       </form>
       </ThemeProvider>

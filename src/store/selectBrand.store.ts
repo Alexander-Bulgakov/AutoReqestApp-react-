@@ -42,6 +42,11 @@ class BrandChoice {
       return result;
   }
 
+  async getRequestsFromAPI(url: string) {
+    const requests = await axios.get(url)
+    return requests
+  }
+
   setLicense(value: any) {
     this.license = value;
     console.log('license, store >> ', this.license)

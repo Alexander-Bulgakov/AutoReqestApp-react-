@@ -1,10 +1,14 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-// const auto = require('./server/auto');
+const bodyParser = require('body-parser');
 const requests = require('./server/request.json');
+
 // console.log(requests);
 const port = 3000;
+let currentRequest;
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello, world');
@@ -15,16 +19,6 @@ app.listen(port, () => {
   console.log(`Listening port ${port}`);
 })
 
-// app.get('/user/:id', function (req, res) {
-//   res.send('user ' + req.params.id)
-// })
-
-// id =  DICT_AUTO (справочник с марками и моделями автомобилей)
-// id = DICT_CITIES (Справочник с возможными городами) 
-
-// GET /reg_service/api/v1/request/:id
-
-// app.get('/reg_service/api/v1/dictionary/:DICT_CITIES', (req, res) => {
 app.get('/reg_service/api/v1/dictionary/DICT_CITIES', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'server', 'cities.json'));
   // req.params();
@@ -55,6 +49,23 @@ app.get('/reg_service/api/v1/request/status/:id', (req, res) => {
 
 })
 
+app.post('/reg_service/api/v1/request', (req, res) => {
 
+  currentRequest = {
+    id: requests.length + 1,
+    status: {
+      code: 'DRAFT'
+    },
+    createDate: new Date().toISOString()
+  };
+  requests.push(currentRequest);
+  res.send(currentRequest);
+  
+})
 
-// app.use(express.static(path.resolve(__dirname, 'server')));
+app.put('/reg_service/api/v1/request', (req, res) => {
+  // console.log(req.body);
+  currentRequest.person = req.body.person;
+  res.send(currentRequest);
+  
+})
