@@ -1,0 +1,20 @@
+.requests-list {
+  list-style-type: none;
+  position: relative;
+  &__item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+  &__icon-container {
+    width: 80px;
+  }
+  &__text {
+    .header{
+      color: black;
+    }
+    .description {
+      color: #999999;
+    }
+  }
+}

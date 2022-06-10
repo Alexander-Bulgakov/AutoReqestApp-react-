@@ -1,33 +1,76 @@
 import React, { useEffect, useState} from 'react';
 import { myBrand } from '../store/selectBrand.store';
-// import Success from '../icons/Success.svg';
+import Success from '../icons/Success.svg';
+import Cloud from '../icons/Cloud.svg';
+import Sync from '../icons/Sync.svg';
+import './RequestsListItem.scss';
+import { Link } from 'react-router-dom';
+// import { observable } from 'mobx';
 
-// const SuccessIcon = () => {
-//   return(
-//     <img src={Success}></img>
-//   )
-// }
+const ListItem = ({ code, id, brand, model, date }: any) => {
+  const statusObj: any = {
+    "SUCCESS": {
+      img: Success,
+      description: "Успех",
+      link: "/SUCCESS"
+    },
+    "DRAFT": {
+      img: Cloud,
+      description: "Черновик",
+      link: "/DRAFT"
+    },
+    "PROCESSING": {
+      img: Sync,
+      description: "В обработке",
+      link: "/DRAFT"
+    }
+  }
 
-const RequestsListItem = (): JSX.Element => {
+  const handleClick = () => {
+    console.log(statusObj[code]);
+    myBrand.setSuccessObject(id, brand, model, date);
+  }
+
+  return (
+    <Link to={statusObj[code].link}  style={{ textDecoration: 'none' }} onClick={handleClick}>
+      <div className="requests-list__item">
+        <div className="requests-list__icon-container">
+          <img src={statusObj[code].img} className="requests-list__icon"/>
+          {/* <Icon code={code} className="requests-list__icon"/> */}
+        </div>
+        <div className="requests-list__text">
+          <h4 className="header">
+            Заявка №{id} на автомобиль {brand} {model}
+          </h4>
+          <p className="description">Статус: {statusObj[code].description}</p>
+          <p className="description">Дата: {new Date(date).toLocaleDateString()}</p>
+        </div>
+      </div>
+    </Link>
+  )
+}
+
+const RequestsListItem = (): JSX.Element | null => {
   const [requests, setRequests] = useState([]);
   useEffect(() => {
     myBrand.getRequestsFromAPI('/reg_service/api/v1/requests')
-      // .then(res => console.log(res.data));
       .then(res => setRequests(res.data));
   }, [])
   return(
-    <div className="requests-list">
-        <ul>
-          {
-            requests.map((request: any) => (
-              <li key={request.id}>
-                {/* <SuccessIcon /> */}
-                {request.city.name}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+    <ul className="requests-list">
+      {
+        requests.map((request: any) => (
+          <li key={request.id}>
+            <ListItem 
+              code={request.status.code} 
+              id={request.id} 
+              brand={request.auto.brand} 
+              model={request.auto.model.name} 
+              date={request.createDate}/>
+          </li>
+        ))
+      }
+    </ul>
   )
 }
 

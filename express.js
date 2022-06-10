@@ -33,39 +33,50 @@ app.get('/reg_service/api/v1/requests', (req, res) => {
 })
 
 app.get('/reg_service/api/v1/request/:id', (req, res) => {
-
   const reqID =  req.params.id;
   const currentReq = requests.find((item) => item.id == reqID);
   res.send(currentReq);
-  
 })
 
 app.get('/reg_service/api/v1/request/status/:id', (req, res) => {
-
   const reqID =  req.params.id;
   const currentReq = requests.find((item) => item.id == reqID);
   const currentCode = currentReq.status.code;
   res.send(currentCode);
-
 })
 
 app.post('/reg_service/api/v1/request', (req, res) => {
-
   currentRequest = {
     id: requests.length + 1,
     status: {
       code: 'DRAFT'
     },
+    person: {
+      lastName: req.body.lastName,
+      firstName: req.body.firstName,
+      secondName: req.body.secondName,
+      driverLicense: req.body.driverLicense,
+      email: req.body.email
+    },
+    auto: {
+      brand: req.body.brand,
+      model: {
+        id: req.body.auto.model.id,
+        name: req.body.auto.model.name
+      }
+    },
+    city: {
+      code: req.body.city.code,
+      name: req.body.city.name
+    },
     createDate: new Date().toISOString()
   };
+  // currentRequest.person.lastName = req.body.lastName;
   requests.push(currentRequest);
   res.send(currentRequest);
-  
 })
 
 app.put('/reg_service/api/v1/request', (req, res) => {
-  // console.log(req.body);
   currentRequest.person = req.body.person;
   res.send(currentRequest);
-  
 })

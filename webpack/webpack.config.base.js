@@ -41,6 +41,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'images/[hash]-[name].[ext]',
+              typescript: true
             },
           },
         ],

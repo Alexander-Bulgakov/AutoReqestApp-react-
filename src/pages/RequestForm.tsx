@@ -2,36 +2,38 @@ import React, { useState} from 'react';
 import { Button, Checkbox, TextField, createTheme, ThemeProvider, FormControlLabel } from '@mui/material';
 import SelectCity from '../components/SelectCity';
 // import { City } from '../types/types';
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 // import { AutoDict } from '../types/types';
 import SelectBrands from '../components/SelectBrands';
 import SelectModels from '../components/SelectModels';
 // import { request } from '../API';
-// import { myBrand } from '../store/selectBrand.store';
 import { useForm } from 'react-hook-form';
 // import { FormHelperText } from '@mui/material';
 import './RequestForm.scss';
 import MaskedInput from '../components/MaskedInput';
+import { myBrand } from '../store/selectBrand.store';
 
 const RequestForm = observer(() => {
-  
+  const [clickedButton, setButton] = useState('');
   // const [cities, setСity] = useState<City[]>([]);
   // const [autoBrands, setBrands] = useState<any>([]);
   const [value, setValue] = useState('');
   const { 
     register, 
-    formState: { errors},
+    formState: { errors },
     handleSubmit
   } = useForm({
     mode: "onChange"
   });
 
-  // const handleChangeLicense = (e: any) => {
-  //   console.log(e);
-  // }
-
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(clickedButton);
+    if (clickedButton === 'saveButton') {
+      myBrand.createRequestDraft('/reg_service/api/v1/request', data)
+      .then(req => console.log(req));
+    } else {
+      console.log(data);
+    }
   }
 
   const theme = createTheme({
@@ -43,10 +45,11 @@ const RequestForm = observer(() => {
   })
 
   const handleChangeInput = (event: any) => {
-    // const value = event.target.value;
-    // if (event.target.id === '')
     setValue(event.target.value);
-    // console.log(event.target.value);
+  }
+
+  const handleClick = (buttonFlag: string) => {
+    setButton(buttonFlag);
   }
 
   return (
@@ -71,8 +74,7 @@ const RequestForm = observer(() => {
           error={!!errors?.lastName}
           sx={{ input: { bgcolor: "background.paper" } }}
           { ...register(
-            "lastName", 
-            // "person.lastName", 
+            "lastName",
             { 
               required: "Обязательное поле", 
               pattern: { 
@@ -163,8 +165,6 @@ const RequestForm = observer(() => {
           className="field form-container__input5" 
           value={value}
           sx={{ input: { bgcolor: "background.paper" } }}
-          // helperText={errors?.driverLicense?.message}
-          // error={!!errors?.driverLicense}
           { ...register(
             "driverLicense", 
             // "person.driverLicense", 
@@ -191,9 +191,9 @@ const RequestForm = observer(() => {
           control={<Checkbox required />} 
           label="Согласен на обработку персональных данных" 
           className="checkbox" />
-        <Button type="submit" variant="contained" id='saveButton'>Сохранить</Button>
-        <Button type="submit" variant="contained" id='registerButton'>Отправить на регистрацию</Button>
-        {/* disabled={!isValid} */}
+        {/* <Button variant="contained" id="saveButton" onClick={handleSaveForm}>Сохранить</Button> */}
+        <Button type="submit" variant="contained" onClick={() => handleClick('saveButton')}>Сохранить</Button>
+        <Button type="submit" variant="contained" onClick={() => handleClick('registerButton')}>Отправить на регистрацию</Button>
       </form>
       </ThemeProvider>
     </div>

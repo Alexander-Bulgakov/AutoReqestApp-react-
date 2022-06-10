@@ -9,6 +9,7 @@ class BrandChoice {
   autoDict: any = {}
   license: any = ''
   models: any = []
+  successObject: any = {}
 
   constructor() {
       makeAutoObservable(this);
@@ -32,13 +33,6 @@ class BrandChoice {
         return obj
       })
       this.setAutoDict(result);
-      // .then(obj => {
-      //   myBrand.setAutoDict(obj);
-      //   // setBrands(Object.keys(obj));
-      //   console.log('собрали объект с бэка в форме - reduce >> ', obj);
-      // })
-      // console.log('result.data >>> ', result.data)
-      // return result.data;
       return result;
   }
 
@@ -60,6 +54,18 @@ class BrandChoice {
   setAutoDict(obj: any) {
     this.autoDict = obj;
     console.log('словарь авто, стор >> ', toJS(this.autoDict))
+  }
+
+  setSuccessObject(id: any, brand: any, model: any, date: any) {
+    this.successObject.id = id;
+    this.successObject.brand = brand;
+    this.successObject.model = model;
+    this.successObject.date = date;
+  }
+
+  async createRequestDraft(url: string, data: {}) {
+    const request = await axios.post(url, data);
+    return request;
   }
 }
 export const myBrand = new BrandChoice();

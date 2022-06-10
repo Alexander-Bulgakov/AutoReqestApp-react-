@@ -9,7 +9,6 @@ import RequestListItem from '../components/RequestsListItem';
 
 console.log(myBrand.getRequestsFromAPI('/reg_service/api/v1/requests'));
 
-// const requestsArray = [1, 2, 3];
 export default function RequestsList(): JSX.Element {
   // const [requests, setRequests] = useState([]);
   // useEffect(() => {

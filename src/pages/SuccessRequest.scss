@@ -1,0 +1,19 @@
+.success-container{
+  max-width: 600px;
+  height: 250px;
+  margin: 70px auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .success-img {
+    margin-right: 20px;
+  }
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+  .success-description {
+    font-size: 22px;
+  }
+}
