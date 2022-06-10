@@ -67,6 +67,11 @@ class BrandChoice {
     const request = await axios.post(url, data);
     return request;
   }
+
+  async updateRequest(url: string, data: {}) {
+    const request = await axios.put(url, data);
+    return request;
+  }
 }
 export const myBrand = new BrandChoice();
 

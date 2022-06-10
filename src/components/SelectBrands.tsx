@@ -37,7 +37,7 @@ const [autoBrands, setBrands] = useState<any>([]);
       <InputLabel>{title}</InputLabel>
       <Select
         { ...register(
-          "auto.brand"
+          "brand"
         )}
         required
         sx={{ bgcolor: "background.paper" }}

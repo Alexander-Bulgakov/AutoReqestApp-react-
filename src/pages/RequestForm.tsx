@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Button, Checkbox, TextField, createTheme, ThemeProvider, FormControlLabel } from '@mui/material';
 import SelectCity from '../components/SelectCity';
 // import { City } from '../types/types';
@@ -15,6 +15,7 @@ import { myBrand } from '../store/selectBrand.store';
 
 const RequestForm = observer(() => {
   const [clickedButton, setButton] = useState('');
+  const [reqData, setData] = useState({});
   // const [cities, setСity] = useState<City[]>([]);
   // const [autoBrands, setBrands] = useState<any>([]);
   const [value, setValue] = useState('');
@@ -26,10 +27,17 @@ const RequestForm = observer(() => {
     mode: "onChange"
   });
 
+  useEffect(() => {
+    myBrand.createRequestDraft('/reg_service/api/v1/request', {})
+      .then(req => setData(req));
+  }, []);
+
+  console.log('reqData >>> ', reqData);
+
   const onSubmit = (data: any) => {
     // console.log(clickedButton);
     if (clickedButton === 'saveButton') {
-      myBrand.createRequestDraft('/reg_service/api/v1/request', data)
+      myBrand.updateRequest('/reg_service/api/v1/request', data)
       .then(req => console.log(req));
     } else {
       console.log(data);

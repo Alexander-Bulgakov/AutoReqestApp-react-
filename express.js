@@ -51,32 +51,34 @@ app.post('/reg_service/api/v1/request', (req, res) => {
     status: {
       code: 'DRAFT'
     },
-    person: {
-      lastName: req.body.lastName,
-      firstName: req.body.firstName,
-      secondName: req.body.secondName,
-      driverLicense: req.body.driverLicense,
-      email: req.body.email
-    },
-    auto: {
-      brand: req.body.brand,
-      model: {
-        id: req.body.auto.model.id,
-        name: req.body.auto.model.name
-      }
-    },
-    city: {
-      code: req.body.city.code,
-      name: req.body.city.name
-    },
     createDate: new Date().toISOString()
   };
-  // currentRequest.person.lastName = req.body.lastName;
   requests.push(currentRequest);
   res.send(currentRequest);
 })
 
+app.post('/reg_service/api/v1/request/registration', (req, res) => {
+  // currentRequest.person = req.body.person;
+  res.send(currentRequest);
+})
 app.put('/reg_service/api/v1/request', (req, res) => {
-  currentRequest.person = req.body.person;
+  currentRequest.person = {
+    lastName: req.body.lastName,
+    firstName: req.body.firstName,
+    secondName: req.body.secondName,
+    driverLicense: req.body.driverLicense,
+    email: req.body.email
+  };
+  currentRequest.auto = {
+    brand: req.body.brand,
+    model: {
+      id: req.body.auto.model.id,
+      name: req.body.auto.model.name
+    }
+  };
+  currentRequest.city = {
+    code: req.body.city.code,
+    name: req.body.city.name
+  };
   res.send(currentRequest);
 })
