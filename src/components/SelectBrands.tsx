@@ -9,28 +9,32 @@ import { myBrand } from '../store/selectBrand.store';
 // import { toJS } from 'mobx';
 // import { PropsModels } from '../types/types';
 
-const SelectBrands = ({ title, register }: any ): JSX.Element => {
-const [value, setValue] = useState('');
-const [autoBrands, setBrands] = useState<any>([]);
+const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value);
-  };
-  console.log('SelectBrands');
-  
+  const [value, setValue] = useState('');
+  const [autoBrands, setBrands] = useState<any>([]);
+
+  useEffect(() => {
+    setValue(currentBrand);
+  }, [currentBrand]);
+
   useEffect(() => {
     myBrand.getBrandsFromAPI('/reg_service/api/v1/dictionary/DICT_AUTO')
     .then(obj => {
       // myBrand.setAutoDict(obj);
       setBrands(Object.keys(obj));
-      console.log('собрали объект с бэка в форме - reduce >> ', obj);
+      // console.log('собрали объект с бэка в форме - reduce >> ', obj);
     })
-  }, [])
+  }, []);
 
   useEffect(() => {
-    console.log('brands useEffect value >>> ', value);
+    // console.log('brands useEffect value >>> ', value);
     myBrand.setBrand(value);
   }, [value])
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setValue(event.target.value);
+  };
 
   return (
     <FormControl fullWidth>
@@ -43,7 +47,6 @@ const [autoBrands, setBrands] = useState<any>([]);
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        // id="demo-simple-select"
         value={value}
         defaultValue=""
         label={title}

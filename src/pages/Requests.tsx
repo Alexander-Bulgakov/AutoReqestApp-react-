@@ -2,30 +2,32 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+// import { myBrand } from '../store/selectBrand.store';
+import RequestsList from '../components/RequestsList';
 import { myBrand } from '../store/selectBrand.store';
-import RequestListItem from '../components/RequestsListItem';
 
+const Requests = (): JSX.Element => {
 
-
-console.log(myBrand.getRequestsFromAPI('/reg_service/api/v1/requests'));
-
-export default function RequestsList(): JSX.Element {
-  // const [requests, setRequests] = useState([]);
-  // useEffect(() => {
-  //   myBrand.getRequestsFromAPI('/reg_service/api/v1/requests')
-  //     // .then(res => console.log(res.data));
-  //     .then(res => setRequests(res.data));
-  // }, [])
+  const handleClick = () => {
+    myBrand.createRequestDraft('/reg_service/api/v1/request', {})
+      .then(req => {
+        myBrand.setRequestId(req.data.id)
+        console.log(req.data.id);
+      });
+  }
+    
   return (
     <div className="content-container">
       <div className="main-header">
         <h1 className="main-header__title">Список заявок</h1>
         <p className="main-header__description">Ваши заявки на покупку автомобилей</p>
       </div>
-      <RequestListItem />
+      <RequestsList />
       <Link to="/DRAFT">
-        <Button variant="contained">Создать заявку</Button>
+        <Button variant="contained" onClick={handleClick}>Создать заявку</Button>
       </Link>
     </div>
   );
 }
+
+export default Requests;

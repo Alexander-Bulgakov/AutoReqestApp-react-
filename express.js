@@ -51,6 +51,24 @@ app.post('/reg_service/api/v1/request', (req, res) => {
     status: {
       code: 'DRAFT'
     },
+    person: {
+      lastName:  null,
+      firstName:  null,
+      secondName:  null,
+      driverLicense:  null,
+      email:  null
+    },
+    auto: {
+      brand:  null,
+      model: {
+        id: null,
+        name: null
+      }
+    },
+    city: {
+      code: null,
+      name: null
+    },
     createDate: new Date().toISOString()
   };
   requests.push(currentRequest);
@@ -62,6 +80,8 @@ app.post('/reg_service/api/v1/request/registration', (req, res) => {
   res.send(currentRequest);
 })
 app.put('/reg_service/api/v1/request', (req, res) => {
+  console.log(req);
+  debugger;
   currentRequest.person = {
     lastName: req.body.lastName,
     firstName: req.body.firstName,
@@ -72,8 +92,8 @@ app.put('/reg_service/api/v1/request', (req, res) => {
   currentRequest.auto = {
     brand: req.body.brand,
     model: {
-      id: req.body.auto.model.id,
-      name: req.body.auto.model.name
+      id: req.body.model.id,
+      name: req.body.model.name
     }
   };
   currentRequest.city = {

@@ -8,37 +8,68 @@ import SelectBrands from '../components/SelectBrands';
 import SelectModels from '../components/SelectModels';
 // import { request } from '../API';
 import { useForm } from 'react-hook-form';
-// import { FormHelperText } from '@mui/material';
 import './RequestForm.scss';
 import MaskedInput from '../components/MaskedInput';
 import { myBrand } from '../store/selectBrand.store';
+// import { toJS } from 'mobx';
 
 const RequestForm = observer(() => {
   const [clickedButton, setButton] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [reqData, setData] = useState({});
-  // const [cities, setСity] = useState<City[]>([]);
-  // const [autoBrands, setBrands] = useState<any>([]);
-  const [value, setValue] = useState('');
+  const [city, setCity] = useState('');
+  const [brand, setBrand] = useState('');
+  const [model, setModel] = useState('');
   const { 
     register, 
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    setValue
   } = useForm({
     mode: "onChange"
   });
 
+  console.log("id >>> ", myBrand.itemObject.id);
+  
+
+  // useEffect(() => {
+  //   myBrand.createRequestDraft('/reg_service/api/v1/request', {})
+  //     .then(req => {
+  //       setData(req);
+  //       setValue('lastName', req.data.lastName);
+  //     });
+  // }, []);
   useEffect(() => {
-    myBrand.createRequestDraft('/reg_service/api/v1/request', {})
-      .then(req => setData(req));
+    myBrand.getRequestFromApi('/reg_service/api/v1/request/' + myBrand.reqId)
+      .then(req => {
+        console.log('getRequestFromApi >>> ', req);
+        
+        setData(req);
+        setValue('lastName', req.data.person.lastName);
+        setValue('firstName', req.data.person.firstName);
+        setValue('secondName', req.data.person.secondName);
+        setValue('email', req.data.person.email);
+        setValue('driverLicense', req.data.person.driverLicense);
+        setValue('city', req.data.city.name);
+        setCity(req.data.city.name);
+        setValue('brand', req.data.auto.brand);
+        setBrand(req.data.auto.brand)
+        setValue('model', {
+          name: req.data.auto.model.name
+        });
+        setModel(req.data.auto.model.name)
+
+      });
   }, []);
 
   console.log('reqData >>> ', reqData);
 
   const onSubmit = (data: any) => {
-    // console.log(clickedButton);
     if (clickedButton === 'saveButton') {
+      console.log('onSubmit save data >>> ', data);
+      debugger;
       myBrand.updateRequest('/reg_service/api/v1/request', data)
-      .then(req => console.log(req));
+      .then(req => console.log('req', req));
     } else {
       console.log(data);
     }
@@ -53,7 +84,7 @@ const RequestForm = observer(() => {
   })
 
   const handleChangeInput = (event: any) => {
-    setValue(event.target.value);
+    setInputValue(event.target.value);
   }
 
   const handleClick = (buttonFlag: string) => {
@@ -147,7 +178,6 @@ const RequestForm = observer(() => {
           placeholder="Email"
           className="field form-container__input4" 
           sx={{ input: { bgcolor: "background.paper" } }}
-          // helperText={errors?.email ? errors?.email?.message : null}
           error={!!errors?.email}
           { ...register(
             "email", 
@@ -171,11 +201,10 @@ const RequestForm = observer(() => {
             inputComponent: MaskedInput as any,
           }}
           className="field form-container__input5" 
-          value={value}
+          value={inputValue}
           sx={{ input: { bgcolor: "background.paper" } }}
           { ...register(
-            "driverLicense", 
-            // "person.driverLicense", 
+            "driverLicense",
             { 
               required: "Введите номер водительского удостоверения",
               pattern: {
@@ -188,18 +217,20 @@ const RequestForm = observer(() => {
         />
         <SelectCity 
           title="Город" 
-          // items={cities}
-          register={register} />
+          register={register}
+          currentCity={city} />
         <SelectBrands 
           title="Марка автомобиля" 
-          // items={autoBrands} 
-          register={register}/>
-        <SelectModels title="Модель" register={register} />
+          register={register}
+          currentBrand={brand} />
+        <SelectModels 
+          title="Модель" 
+          register={register} 
+          currentModel={model} />
         <FormControlLabel 
           control={<Checkbox required />} 
           label="Согласен на обработку персональных данных" 
           className="checkbox" />
-        {/* <Button variant="contained" id="saveButton" onClick={handleSaveForm}>Сохранить</Button> */}
         <Button type="submit" variant="contained" onClick={() => handleClick('saveButton')}>Сохранить</Button>
         <Button type="submit" variant="contained" onClick={() => handleClick('registerButton')}>Отправить на регистрацию</Button>
       </form>

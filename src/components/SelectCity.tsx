@@ -8,20 +8,26 @@ import { myBrand } from '../store/selectBrand.store';
 import { City } from '../types/types';
 
 
-const SelectCity = ({ title, register }: any ): JSX.Element => {
+const SelectCity = ({ title, register, currentCity }: any ): JSX.Element => {
+  
   const [value, setValue] = useState('');
   const [items, setItems] = useState<City[]>([]);
 
   useEffect(() => {
-    myBrand.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
-      .then(res => setItems(res));
-  }, [])
+    setValue(currentCity);
+  }, [currentCity]);
 
+  useEffect(() => {
+    myBrand.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
+    .then(res => setItems(res));
+  }, []);
+  
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string);
   };
-
-  console.log('items, city >> ', items);
+  
+  // console.log('currentCity >>>', value);
+  // console.log('items, city >> ', items);
 
   return (
     <FormControl fullWidth>
@@ -34,15 +40,15 @@ const SelectCity = ({ title, register }: any ): JSX.Element => {
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        // id="demo-simple-select"
         value={value}
+        defaultValue=""
         label={title}
         onChange={handleChange}
         variant="filled"
         disableUnderline
       >
         {items.map((city: any) => (
-          <MenuItem key={city.code} value={city}>{city.name}</MenuItem>
+          <MenuItem key={city.code} value={city.name}>{city.name}</MenuItem>
         ))}
       </Select>
     </FormControl>

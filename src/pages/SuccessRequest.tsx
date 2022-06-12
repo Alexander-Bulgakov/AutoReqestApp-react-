@@ -1,4 +1,4 @@
-import { toJS } from "mobx";
+// import { toJS } from "mobx";
 import React from "react";
 import { myBrand } from "../store/selectBrand.store";
 import './SuccessRequest.scss';
@@ -9,16 +9,16 @@ import Button from '@mui/material/Button';
 
 
 const SuccessRequestPage = () => {
-  console.log(toJS(myBrand.successObject));
+  // console.log(toJS(myBrand.itemObject));
   return(
     <div className="success-container">
       <div className="success-container__header">
         <img src={Success} alt="" className="success-img"/>
-        <h1>Заявка №{myBrand.successObject.id}</h1>
+        <h1>Заявка №{myBrand.itemObject.id}</h1>
       </div>
       {/* <div className="success-container__description"> */}
-        <p className="success-description">Автомобиль: {myBrand.successObject.brand} {myBrand.successObject.model}</p>
-        <p className="success-description">Дата заявки: { new Date(myBrand.successObject.date).toLocaleDateString()}</p>
+        <p className="success-description">Автомобиль: {myBrand.itemObject.brand} {myBrand.itemObject.model}</p>
+        <p className="success-description">Дата заявки: { new Date(myBrand.itemObject.date).toLocaleDateString()}</p>
         <Link to="/">
           <Button variant="contained">К списку заявок</Button>
         </Link>

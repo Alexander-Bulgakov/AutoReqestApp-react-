@@ -9,7 +9,9 @@ class BrandChoice {
   autoDict: any = {}
   license: any = ''
   models: any = []
-  successObject: any = {}
+  itemObject: any = {}
+  reqObject: any = {}
+  reqId = ''
 
   constructor() {
       makeAutoObservable(this);
@@ -43,28 +45,39 @@ class BrandChoice {
 
   setLicense(value: any) {
     this.license = value;
-    console.log('license, store >> ', this.license)
   }
 
   setBrand(value: any) {
     this.brand = value;
-    console.log('смена брэнда из useEffect brands', this.brand);
   }
 
   setAutoDict(obj: any) {
     this.autoDict = obj;
-    console.log('словарь авто, стор >> ', toJS(this.autoDict))
   }
 
-  setSuccessObject(id: any, brand: any, model: any, date: any) {
-    this.successObject.id = id;
-    this.successObject.brand = brand;
-    this.successObject.model = model;
-    this.successObject.date = date;
+  setItemObject(id: any, brand: any, model: any, date: any) {
+    this.itemObject.id = id;
+    this.itemObject.brand = brand;
+    this.itemObject.model = model;
+    this.itemObject.date = date;
   }
 
+  setRequestId(id: string){
+    this.reqId = id;
+    console.log('reqID', this.reqId);
+    
+  }
+
+  async getRequestFromApi(url: string) {
+    const request = await axios.get(url);
+    // this.reqObject = request.data;
+    console.log('this.reqObject >>> ', toJS(this.reqObject)) 
+    return request;
+  }
   async createRequestDraft(url: string, data: {}) {
     const request = await axios.post(url, data);
+    this.reqObject = request.data;
+    console.log('this.reqObject >>> ', toJS(this.reqObject)) 
     return request;
   }
 

@@ -28,7 +28,8 @@ const ListItem = ({ code, id, brand, model, date }: any) => {
 
   const handleClick = () => {
     console.log(statusObj[code]);
-    myBrand.setSuccessObject(id, brand, model, date);
+    myBrand.setItemObject(id, brand, model, date);
+    myBrand.setRequestId(id);
   }
 
   return (
@@ -36,7 +37,6 @@ const ListItem = ({ code, id, brand, model, date }: any) => {
       <div className="requests-list__item">
         <div className="requests-list__icon-container">
           <img src={statusObj[code].img} className="requests-list__icon"/>
-          {/* <Icon code={code} className="requests-list__icon"/> */}
         </div>
         <div className="requests-list__text">
           <h4 className="header">
@@ -49,8 +49,7 @@ const ListItem = ({ code, id, brand, model, date }: any) => {
     </Link>
   )
 }
-
-const RequestsListItem = (): JSX.Element | null => {
+const RequestsList = (): JSX.Element | null => {
   const [requests, setRequests] = useState([]);
   useEffect(() => {
     myBrand.getRequestsFromAPI('/reg_service/api/v1/requests')
@@ -74,4 +73,4 @@ const RequestsListItem = (): JSX.Element | null => {
   )
 }
 
-export default RequestsListItem;
+export default RequestsList;

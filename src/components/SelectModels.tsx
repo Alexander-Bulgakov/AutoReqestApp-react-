@@ -7,44 +7,45 @@ import { MenuItem } from '@mui/material';
 import { myBrand } from '../store/selectBrand.store';
 import { toJS } from 'mobx';
 
-const SelectModels = ({ title, register }: any ): JSX.Element => {
+const SelectModels = ({ title, register, currentModel }: any ): JSX.Element => {
   const [value, setValue] = useState('');
   const [models, setModels] = useState([]);
 
-
-  // обработчик значения селекта после выбора
-  const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value as string);
-  };
-
   useEffect(() => {
-    setValue('');
+    setValue(currentModel);
+  }, [currentModel]);
+  
+  
+  useEffect(() => {
     const obj = toJS(myBrand.autoDict);
     const arr = obj[myBrand.brand];
-    console.log('arr', arr);
     setModels(arr);
   }, [myBrand.brand])
-
+  
+  const handleChange = (event: SelectChangeEvent) => {
+    setValue(event.target.value);
+  };
+  // console.log('currentModel >>>', value);
   return (
     <FormControl fullWidth>
       <InputLabel>{title}</InputLabel>
       <Select
         { ...register(
-          "auto.model"
+          "model"
         )}
+        required
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        // id="demo-simple-select"
         value={value}
+        // defaultValue=""
         label={title}
-        defaultValue=""
         onChange={handleChange}
         variant="filled"
         disableUnderline
       >
         {models?.length && models.map((item: any) => (
-          <MenuItem key={item.id} value={item}>{item.name}</MenuItem>
+          <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
         ))}
 
       </Select>
