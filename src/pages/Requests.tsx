@@ -1,19 +1,25 @@
-/* eslint-disable react/jsx-indent */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-// import { myBrand } from '../store/selectBrand.store';
 import RequestsList from '../components/RequestsList';
 import { myBrand } from '../store/selectBrand.store';
 
 const Requests = (): JSX.Element => {
 
-  const handleClick = () => {
-    myBrand.createRequestDraft('/reg_service/api/v1/request', {})
-      .then(req => {
-        myBrand.setRequestId(req.data.id)
-        console.log(req.data.id);
-      });
+  useEffect(() => myBrand.setRequestId(null));
+
+  const handleClick = (e: any) => {
+    // если не найдена заявка в статусе SUCCESS
+    if (!myBrand.successReq){
+      myBrand.createRequestDraft('/reg_service/api/v1/request', {})
+        .then(req => {
+          myBrand.setRequestObject(req.data);
+          myBrand.setRequestId(req.data.id);
+        });
+    } else {
+      // если найдена заявка в статусе SUCCESS
+      e.preventDefault();
+    }
   }
     
   return (

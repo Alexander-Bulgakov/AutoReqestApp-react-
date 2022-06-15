@@ -1,17 +1,21 @@
 import axios from "axios";
 import { makeAutoObservable, toJS } from "mobx";
-// import { AutoDict } from "types/types";
-// import { Auto } from '../types/types';
-// import { observer } from "mobx-react-lite";
 
 class BrandChoice {
   brand = ''
   autoDict: any = {}
   license: any = ''
   models: any = []
+  currentCity = ''
   itemObject: any = {}
-  reqObject: any = {}
-  reqId = ''
+  requestObject: any = {}
+  reqId: string | null = ''
+  // formObject: any = {}
+  successReq = false
+
+  setCity(city: any) {
+    this.currentCity = city;
+  }
 
   constructor() {
       makeAutoObservable(this);
@@ -25,6 +29,7 @@ class BrandChoice {
   }
 
   async getBrandsFromAPI(url: string) {
+
     const result = await axios.get<any, any>(url)
       .then(res => {
         const obj: {} = res.data.reduce((acc: any, val: any) => {
@@ -36,6 +41,7 @@ class BrandChoice {
       })
       this.setAutoDict(result);
       return result;
+      
   }
 
   async getRequestsFromAPI(url: string) {
@@ -62,22 +68,56 @@ class BrandChoice {
     this.itemObject.date = date;
   }
 
-  setRequestId(id: string){
-    this.reqId = id;
-    console.log('reqID', this.reqId);
-    
+  setRequestId(id: string | null){
+    this.reqId = id;    
+    console.log('reqId >>', this.reqId);
   }
+
+  setRequestObject(data: any) {
+    this.requestObject = data;
+  }
+
+  // setFormObject(data: any){
+
+  //   const {auto, city, createDate, id, person, status} = data;
+  //   this.formObject = {
+  //     id: id,
+  //     status: {
+  //       code: status.code
+  //     },
+  //     person: {
+  //       lastName: person.lastName,
+  //       firstName: person.firstName,
+  //       secondName: person.secondName,
+  //       driverLicense: person.driverLicense,
+  //       email: person.email
+  //     },
+  //     auto: {
+  //       brand: auto.brand,
+  //       model: {
+  //         id: auto.model.id,
+  //         name: auto.model.name
+  //       }
+  //     },
+  //     city: {
+  //       code: city.code,
+  //       name: city.name
+  //     },
+  //     createDate: createDate
+  //   }
+    
+  // }
 
   async getRequestFromApi(url: string) {
     const request = await axios.get(url);
-    // this.reqObject = request.data;
-    console.log('this.reqObject >>> ', toJS(this.reqObject)) 
+    console.log('this.requestObject >>> ', toJS(this.requestObject)) 
     return request;
   }
+  
   async createRequestDraft(url: string, data: {}) {
     const request = await axios.post(url, data);
-    this.reqObject = request.data;
-    console.log('this.reqObject >>> ', toJS(this.reqObject)) 
+    this.requestObject = request.data;
+    console.log('this.requestObject >>> ', toJS(this.requestObject)) 
     return request;
   }
 

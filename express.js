@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const requests = require('./server/request.json');
+const requestsList = [];
 
-// console.log(requests);
 const port = 3000;
 let currentRequest;
 
@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello, world');
-  // res.send(auto.AutoDict);
 })
 
 app.listen(port, () => {
@@ -21,7 +20,6 @@ app.listen(port, () => {
 
 app.get('/reg_service/api/v1/dictionary/DICT_CITIES', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'server', 'cities.json'));
-  // req.params();
 })
 
 app.get('/reg_service/api/v1/dictionary/DICT_AUTO', (req, res) => {
@@ -29,25 +27,28 @@ app.get('/reg_service/api/v1/dictionary/DICT_AUTO', (req, res) => {
 })
 
 app.get('/reg_service/api/v1/requests', (req, res) => {
-  res.send(requests);
+  res.send(requestsList);
+  // res.send(requests);
 })
 
 app.get('/reg_service/api/v1/request/:id', (req, res) => {
   const reqID =  req.params.id;
-  const currentReq = requests.find((item) => item.id == reqID);
+  const currentReq = requestsList.find((item) => item.id == reqID);
+  // const currentReq = requests.find((item) => item.id == reqID);
   res.send(currentReq);
 })
 
 app.get('/reg_service/api/v1/request/status/:id', (req, res) => {
   const reqID =  req.params.id;
-  const currentReq = requests.find((item) => item.id == reqID);
+  const currentReq = requestsList.find((item) => item.id == reqID);
+  // const currentReq = requests.find((item) => item.id == reqID);
   const currentCode = currentReq.status.code;
   res.send(currentCode);
 })
 
 app.post('/reg_service/api/v1/request', (req, res) => {
   currentRequest = {
-    id: requests.length + 1,
+    id: requestsList.length ? requestsList.length + 1 : 1,
     status: {
       code: 'DRAFT'
     },
@@ -71,17 +72,15 @@ app.post('/reg_service/api/v1/request', (req, res) => {
     },
     createDate: new Date().toISOString()
   };
-  requests.push(currentRequest);
+  // requests.push(currentRequest);
+  requestsList.push(currentRequest);
   res.send(currentRequest);
 })
 
 app.post('/reg_service/api/v1/request/registration', (req, res) => {
-  // currentRequest.person = req.body.person;
   res.send(currentRequest);
 })
 app.put('/reg_service/api/v1/request', (req, res) => {
-  console.log(req);
-  debugger;
   currentRequest.person = {
     lastName: req.body.lastName,
     firstName: req.body.firstName,
@@ -98,7 +97,7 @@ app.put('/reg_service/api/v1/request', (req, res) => {
   };
   currentRequest.city = {
     code: req.body.city.code,
-    name: req.body.city.name
+    name: req.body.city
   };
   res.send(currentRequest);
 })

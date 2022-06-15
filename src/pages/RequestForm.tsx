@@ -1,23 +1,20 @@
 import React, { useEffect, useState} from 'react';
 import { Button, Checkbox, TextField, createTheme, ThemeProvider, FormControlLabel } from '@mui/material';
 import SelectCity from '../components/SelectCity';
-// import { City } from '../types/types';
 import { observer } from 'mobx-react-lite';
-// import { AutoDict } from '../types/types';
 import SelectBrands from '../components/SelectBrands';
 import SelectModels from '../components/SelectModels';
-// import { request } from '../API';
 import { useForm } from 'react-hook-form';
 import './RequestForm.scss';
 import MaskedInput from '../components/MaskedInput';
 import { myBrand } from '../store/selectBrand.store';
-// import { toJS } from 'mobx';
+import { toJS } from 'mobx';
 
 const RequestForm = observer(() => {
+
   const [clickedButton, setButton] = useState('');
   const [inputValue, setInputValue] = useState('');
-  const [reqData, setData] = useState({});
-  const [city, setCity] = useState('');
+  // const [city, setCity] = useState('');
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const { 
@@ -28,46 +25,35 @@ const RequestForm = observer(() => {
   } = useForm({
     mode: "onChange"
   });
-
-  console.log("id >>> ", myBrand.itemObject.id);
   
-
-  // useEffect(() => {
-  //   myBrand.createRequestDraft('/reg_service/api/v1/request', {})
-  //     .then(req => {
-  //       setData(req);
-  //       setValue('lastName', req.data.lastName);
-  //     });
-  // }, []);
+  console.log('myBrand.requestObject (form) >> ', toJS(myBrand.requestObject));
   useEffect(() => {
+
     myBrand.getRequestFromApi('/reg_service/api/v1/request/' + myBrand.reqId)
-      .then(req => {
-        console.log('getRequestFromApi >>> ', req);
-        
-        setData(req);
-        setValue('lastName', req.data.person.lastName);
-        setValue('firstName', req.data.person.firstName);
-        setValue('secondName', req.data.person.secondName);
-        setValue('email', req.data.person.email);
-        setValue('driverLicense', req.data.person.driverLicense);
-        setValue('city', req.data.city.name);
-        setCity(req.data.city.name);
-        setValue('brand', req.data.auto.brand);
-        setBrand(req.data.auto.brand)
+      .then(req => req.data)
+      .then(data => {
+        console.log('getRequestFromApi >>> ', data);        
+        setValue('lastName', data.person.lastName);
+        setValue('firstName', data.person.firstName);
+        setValue('secondName', data.person.secondName);
+        setValue('email', data.person.email);
+        setValue('driverLicense', data.person.driverLicense);
+        setValue('city', data.city.name);
+        myBrand.setCity(data.city.name);
+        // setCity(data.city.name);
+        setValue('brand', data.auto.brand);
+        setBrand(data.auto.brand);
         setValue('model', {
-          name: req.data.auto.model.name
+          name: data.auto.model.name
         });
-        setModel(req.data.auto.model.name)
-
+        setModel(data.auto.model.name);
       });
-  }, []);
-
-  console.log('reqData >>> ', reqData);
+      
+  }, [myBrand.requestObject]);
 
   const onSubmit = (data: any) => {
     if (clickedButton === 'saveButton') {
       console.log('onSubmit save data >>> ', data);
-      debugger;
       myBrand.updateRequest('/reg_service/api/v1/request', data)
       .then(req => console.log('req', req));
     } else {
@@ -218,7 +204,8 @@ const RequestForm = observer(() => {
         <SelectCity 
           title="Город" 
           register={register}
-          currentCity={city} />
+          // currentCity={city}
+           />
         <SelectBrands 
           title="Марка автомобиля" 
           register={register}

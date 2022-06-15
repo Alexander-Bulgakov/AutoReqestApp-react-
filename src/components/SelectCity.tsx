@@ -4,18 +4,18 @@ import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { myBrand } from '../store/selectBrand.store';
-// import { Props } from '../types/types';
 import { City } from '../types/types';
 
 
-const SelectCity = ({ title, register, currentCity }: any ): JSX.Element => {
+const SelectCity = ({ title, register }: any ): JSX.Element => {
   
-  const [value, setValue] = useState('');
+  const [defaultCity, setValue] = useState('');
   const [items, setItems] = useState<City[]>([]);
 
   useEffect(() => {
-    setValue(currentCity);
-  }, [currentCity]);
+
+    setValue(myBrand.currentCity);
+  }, [myBrand.currentCity]);
 
   useEffect(() => {
     myBrand.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
@@ -23,12 +23,11 @@ const SelectCity = ({ title, register, currentCity }: any ): JSX.Element => {
   }, []);
   
   const handleChange = (event: SelectChangeEvent) => {
+    const currentCity = items.find(item => item.name == event.target.value);
+    console.log('currentCity >>> ', currentCity)
     setValue(event.target.value as string);
   };
   
-  // console.log('currentCity >>>', value);
-  // console.log('items, city >> ', items);
-
   return (
     <FormControl fullWidth>
       <InputLabel>{title}</InputLabel>
@@ -40,15 +39,19 @@ const SelectCity = ({ title, register, currentCity }: any ): JSX.Element => {
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        value={value}
-        defaultValue=""
+        value={defaultCity}
+        defaultValue={defaultCity}
         label={title}
         onChange={handleChange}
         variant="filled"
         disableUnderline
       >
         {items.map((city: any) => (
-          <MenuItem key={city.code} value={city.name}>{city.name}</MenuItem>
+          <MenuItem 
+            key={city.code} 
+            value={city.name} 
+            selected={city.name == defaultCity}
+            >{city.name}</MenuItem>
         ))}
       </Select>
     </FormControl>

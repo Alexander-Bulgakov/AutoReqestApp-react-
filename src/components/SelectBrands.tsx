@@ -1,4 +1,3 @@
-// import React, { useState } from 'react';
 import React, { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -6,8 +5,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
 import { myBrand } from '../store/selectBrand.store';
-// import { toJS } from 'mobx';
-// import { PropsModels } from '../types/types';
 
 const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
 
@@ -21,14 +18,11 @@ const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
   useEffect(() => {
     myBrand.getBrandsFromAPI('/reg_service/api/v1/dictionary/DICT_AUTO')
     .then(obj => {
-      // myBrand.setAutoDict(obj);
       setBrands(Object.keys(obj));
-      // console.log('собрали объект с бэка в форме - reduce >> ', obj);
     })
   }, []);
 
   useEffect(() => {
-    // console.log('brands useEffect value >>> ', value);
     myBrand.setBrand(value);
   }, [value])
 

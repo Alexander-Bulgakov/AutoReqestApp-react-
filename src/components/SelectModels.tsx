@@ -8,6 +8,7 @@ import { myBrand } from '../store/selectBrand.store';
 import { toJS } from 'mobx';
 
 const SelectModels = ({ title, register, currentModel }: any ): JSX.Element => {
+  
   const [value, setValue] = useState('');
   const [models, setModels] = useState([]);
 
@@ -20,12 +21,12 @@ const SelectModels = ({ title, register, currentModel }: any ): JSX.Element => {
     const obj = toJS(myBrand.autoDict);
     const arr = obj[myBrand.brand];
     setModels(arr);
-  }, [myBrand.brand])
+  }, [myBrand.brand]);
   
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value);
   };
-  // console.log('currentModel >>>', value);
+
   return (
     <FormControl fullWidth>
       <InputLabel>{title}</InputLabel>

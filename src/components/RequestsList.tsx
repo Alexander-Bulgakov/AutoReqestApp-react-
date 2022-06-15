@@ -5,9 +5,9 @@ import Cloud from '../icons/Cloud.svg';
 import Sync from '../icons/Sync.svg';
 import './RequestsListItem.scss';
 import { Link } from 'react-router-dom';
-// import { observable } from 'mobx';
 
 const ListItem = ({ code, id, brand, model, date }: any) => {
+
   const statusObj: any = {
     "SUCCESS": {
       img: Success,
@@ -24,12 +24,20 @@ const ListItem = ({ code, id, brand, model, date }: any) => {
       description: "В обработке",
       link: "/DRAFT"
     }
+    
   }
 
   const handleClick = () => {
-    console.log(statusObj[code]);
-    myBrand.setItemObject(id, brand, model, date);
+    
+    //Этот метод удалить позже
     myBrand.setRequestId(id);
+
+    // myBrand.getRequestFromApi('/reg_service/api/v1/request/' + id)
+    //   .then(req => {
+    //     myBrand.setRequestObject(req.data);
+    //   });
+    myBrand.setItemObject(id, brand, model, date);
+    
   }
 
   return (
