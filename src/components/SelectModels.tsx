@@ -7,15 +7,16 @@ import { MenuItem } from '@mui/material';
 import { myBrand } from '../store/selectBrand.store';
 import { toJS } from 'mobx';
 
-const SelectModels = ({ title, register, currentModel }: any ): JSX.Element => {
+const SelectModels = ({ title, register }: any ): JSX.Element => {
   
-  const [value, setValue] = useState('');
+  const [value, setModel] = useState('');
   const [models, setModels] = useState([]);
 
+  console.log('myBrand.currentModel >> ', myBrand.currentModel);
+
   useEffect(() => {
-    setValue(currentModel);
-  }, [currentModel]);
-  
+    setModel(myBrand.currentModel);
+  }, [myBrand.currentModel]);
   
   useEffect(() => {
     const obj = toJS(myBrand.autoDict);
@@ -24,7 +25,7 @@ const SelectModels = ({ title, register, currentModel }: any ): JSX.Element => {
   }, [myBrand.brand]);
   
   const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value);
+    setModel(event.target.value);
   };
 
   return (
@@ -32,7 +33,7 @@ const SelectModels = ({ title, register, currentModel }: any ): JSX.Element => {
       <InputLabel>{title}</InputLabel>
       <Select
         { ...register(
-          "model"
+          "model.name"
         )}
         required
         sx={{ bgcolor: "background.paper" }}

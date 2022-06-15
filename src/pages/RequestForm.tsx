@@ -16,7 +16,7 @@ const RequestForm = observer(() => {
   const [inputValue, setInputValue] = useState('');
   // const [city, setCity] = useState('');
   const [brand, setBrand] = useState('');
-  const [model, setModel] = useState('');
+  // const [model, setModel] = useState('');
   const { 
     register, 
     formState: { errors },
@@ -43,10 +43,12 @@ const RequestForm = observer(() => {
         // setCity(data.city.name);
         setValue('brand', data.auto.brand);
         setBrand(data.auto.brand);
-        setValue('model', {
-          name: data.auto.model.name
-        });
-        setModel(data.auto.model.name);
+        setValue('model.name', data.auto.model.name);
+        // setValue('model', {
+        //   name: data.auto.model.name
+        // });
+        myBrand.setModel(data.auto.model.name);
+        // setModel(data.auto.model.name);
       });
       
   }, [myBrand.requestObject]);
@@ -214,7 +216,8 @@ const RequestForm = observer(() => {
         <SelectModels 
           title="Модель" 
           register={register} 
-          currentModel={model} />
+          // currentModel={model} 
+          />
         <FormControlLabel 
           control={<Checkbox required />} 
           label="Согласен на обработку персональных данных" 

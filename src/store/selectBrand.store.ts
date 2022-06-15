@@ -7,6 +7,7 @@ class BrandChoice {
   license: any = ''
   models: any = []
   currentCity = ''
+  currentModel = ''
   itemObject: any = {}
   requestObject: any = {}
   reqId: string | null = ''
@@ -15,6 +16,12 @@ class BrandChoice {
 
   setCity(city: any) {
     this.currentCity = city;
+  }
+
+  setModel(model: any) {
+    this.currentModel = model;
+    console.log('this.currentModel >>> ', this.currentModel);
+    
   }
 
   constructor() {
