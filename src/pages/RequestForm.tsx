@@ -38,7 +38,7 @@ const RequestForm = observer(() => {
         setValue('secondName', data.person.secondName);
         setValue('email', data.person.email);
         setValue('driverLicense', data.person.driverLicense);
-        setValue('city', data.city.name);
+        setValue('city.name', data.city.name);
         myBrand.setCity(data.city.name);
         // setCity(data.city.name);
         setValue('brand', data.auto.brand);
@@ -204,6 +204,7 @@ const RequestForm = observer(() => {
         <SelectCity 
           title="Город" 
           register={register}
+          setValue={setValue}
           // currentCity={city}
            />
         <SelectBrands 

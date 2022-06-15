@@ -97,7 +97,7 @@ app.put('/reg_service/api/v1/request', (req, res) => {
   };
   currentRequest.city = {
     code: req.body.city.code,
-    name: req.body.city
+    name: req.body.city.name
   };
   res.send(currentRequest);
 })

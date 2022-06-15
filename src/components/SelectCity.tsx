@@ -7,25 +7,29 @@ import { myBrand } from '../store/selectBrand.store';
 import { City } from '../types/types';
 
 
-const SelectCity = ({ title, register }: any ): JSX.Element => {
+const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
   
-  const [defaultCity, setValue] = useState('');
+  const [defaultCity, setCity] = useState('');
   const [items, setItems] = useState<City[]>([]);
 
   useEffect(() => {
-
-    setValue(myBrand.currentCity);
+    setCity(myBrand.currentCity);
   }, [myBrand.currentCity]);
 
   useEffect(() => {
     myBrand.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
     .then(res => setItems(res));
   }, []);
+
+  useEffect(() => {
+    const currentCity = items.find(item => item.name == defaultCity);
+    setValue('city.code', currentCity?.code)
+  }, [defaultCity]);
   
   const handleChange = (event: SelectChangeEvent) => {
     const currentCity = items.find(item => item.name == event.target.value);
     console.log('currentCity >>> ', currentCity)
-    setValue(event.target.value as string);
+    setCity(event.target.value as string);
   };
   
   return (
@@ -40,7 +44,7 @@ const SelectCity = ({ title, register }: any ): JSX.Element => {
         className="select"
         labelId="demo-simple-select-label"
         value={defaultCity}
-        defaultValue={defaultCity}
+        // defaultValue={defaultCity}
         label={title}
         onChange={handleChange}
         variant="filled"
