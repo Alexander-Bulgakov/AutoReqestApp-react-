@@ -6,13 +6,16 @@ import { observer } from 'mobx-react-lite';
 import { MenuItem } from '@mui/material';
 import { myBrand } from '../store/selectBrand.store';
 import { toJS } from 'mobx';
+import { Auto } from '../types/types';
 
-const SelectModels = ({ title, register }: any ): JSX.Element => {
+
+const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
   
-  const [value, setModel] = useState('');
-  const [models, setModels] = useState([]);
+  const [model, setModel] = useState('');
+  const [models, setModels] = useState<Auto[]>([]);
 
   console.log('myBrand.currentModel >> ', myBrand.currentModel);
+  console.log('model >> ', model);
 
   useEffect(() => {
     setModel(myBrand.currentModel);
@@ -23,6 +26,12 @@ const SelectModels = ({ title, register }: any ): JSX.Element => {
     const arr = obj[myBrand.brand];
     setModels(arr);
   }, [myBrand.brand]);
+
+  useEffect(() => {
+    console.log('models >>> ', models)
+    // const currentModel = models.find(item => item.name == model);
+    // setValue('model.id', currentModel?.id);
+  }, [model]);
   
   const handleChange = (event: SelectChangeEvent) => {
     setModel(event.target.value);
@@ -39,7 +48,7 @@ const SelectModels = ({ title, register }: any ): JSX.Element => {
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        value={value}
+        value={model}
         // defaultValue=""
         label={title}
         onChange={handleChange}
@@ -47,7 +56,11 @@ const SelectModels = ({ title, register }: any ): JSX.Element => {
         disableUnderline
       >
         {models?.length && models.map((item: any) => (
-          <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
+          <MenuItem 
+            key={item.id} 
+            value={item.name}
+            selected={item.name == model}
+            >{item.name}</MenuItem>
         ))}
 
       </Select>

@@ -13,7 +13,7 @@ const Requests = (): JSX.Element => {
     if (!myBrand.successReq){
       myBrand.createRequestDraft('/reg_service/api/v1/request', {})
         .then(req => {
-          myBrand.setRequestObject(req.data);
+          // myBrand.setRequestObject(req.data);
           myBrand.setRequestId(req.data.id);
         });
     } else {

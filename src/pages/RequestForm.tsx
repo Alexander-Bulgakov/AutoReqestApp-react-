@@ -9,14 +9,15 @@ import './RequestForm.scss';
 import MaskedInput from '../components/MaskedInput';
 import { myBrand } from '../store/selectBrand.store';
 import { toJS } from 'mobx';
+import { useNavigate } from 'react-router-dom';
+
 
 const RequestForm = observer(() => {
 
   const [clickedButton, setButton] = useState('');
   const [inputValue, setInputValue] = useState('');
-  // const [city, setCity] = useState('');
   const [brand, setBrand] = useState('');
-  // const [model, setModel] = useState('');
+  const navigate = useNavigate();
   const { 
     register, 
     formState: { errors },
@@ -40,15 +41,10 @@ const RequestForm = observer(() => {
         setValue('driverLicense', data.person.driverLicense);
         setValue('city.name', data.city.name);
         myBrand.setCity(data.city.name);
-        // setCity(data.city.name);
         setValue('brand', data.auto.brand);
         setBrand(data.auto.brand);
         setValue('model.name', data.auto.model.name);
-        // setValue('model', {
-        //   name: data.auto.model.name
-        // });
         myBrand.setModel(data.auto.model.name);
-        // setModel(data.auto.model.name);
       });
       
   }, [myBrand.requestObject]);
@@ -58,8 +54,12 @@ const RequestForm = observer(() => {
       console.log('onSubmit save data >>> ', data);
       myBrand.updateRequest('/reg_service/api/v1/request', data)
       .then(req => console.log('req', req));
+      navigate('/');
     } else {
-      console.log(data);
+      console.log('onRegistration save data >>> ', data);
+      data.id = myBrand.reqId;
+      myBrand.registrationRequest('reg_service/api/v1/request/registration', data)
+      .then(res => console.log('registrationRequest >>> ', res))
     }
   }
 
@@ -215,14 +215,17 @@ const RequestForm = observer(() => {
           currentBrand={brand} />
         <SelectModels 
           title="Модель" 
-          register={register} 
+          register={register}
+          setValue={setValue}
           // currentModel={model} 
           />
         <FormControlLabel 
           control={<Checkbox required />} 
           label="Согласен на обработку персональных данных" 
           className="checkbox" />
+        {/* <Link to="/"> */}
         <Button type="submit" variant="contained" onClick={() => handleClick('saveButton')}>Сохранить</Button>
+        {/* </Link> */}
         <Button type="submit" variant="contained" onClick={() => handleClick('registerButton')}>Отправить на регистрацию</Button>
       </form>
       </ThemeProvider>
