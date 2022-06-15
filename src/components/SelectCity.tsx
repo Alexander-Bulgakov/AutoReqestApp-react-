@@ -37,7 +37,7 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
       <InputLabel>{title}</InputLabel>
       <Select
         { ...register(
-          "city"
+          "city.name"
         )}
         required
         sx={{ bgcolor: "background.paper" }}
