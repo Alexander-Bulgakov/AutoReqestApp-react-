@@ -11,6 +11,22 @@ import { myBrand } from '../store/selectBrand.store';
 import { toJS } from 'mobx';
 import { useNavigate } from 'react-router-dom';
 
+const defaultValues = {
+  lastName: '',
+  firstName: '',
+  secondName: '',
+  email: '',
+  driverLicense: '',
+  city: {
+    name: '',
+    code: ''
+  },
+  brand: '',
+  model: {
+    name: '',
+    id: ''
+  }
+}
 
 const RequestForm = observer(() => {
 
@@ -25,22 +41,7 @@ const RequestForm = observer(() => {
     setValue
   } = useForm({
     mode: "onSubmit",
-    defaultValues: {
-      lastName: '',
-      firstName: '',
-      secondName: '',
-      email: '',
-      driverLicense: '',
-      city: {
-        name: '',
-        code: ''
-      },
-      brand: '',
-      model: {
-        name: '',
-        id: ''
-      }
-    }
+    defaultValues: defaultValues
   });
   
   console.log('myBrand.requestObject (form) >> ', toJS(myBrand.requestObject));
@@ -74,8 +75,10 @@ const RequestForm = observer(() => {
     } else {
       console.log('onRegistration save data >>> ', data);
       data.id = myBrand.reqId;
+      myBrand.setRegisteredReq(data.id);
       myBrand.registrationRequest('reg_service/api/v1/request/registration', data)
-      .then(res => console.log('registrationRequest >>> ', res))
+      .then(res => console.log('registrationRequest >>> ', res));
+      navigate('/Loading');
     }
   }
 

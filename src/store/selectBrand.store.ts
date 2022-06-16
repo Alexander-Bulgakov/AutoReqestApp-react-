@@ -13,6 +13,7 @@ class BrandChoice {
   reqId: string | null = ''
   // formObject: any = {}
   successReq = false
+  registeredReqId = ''
 
   setCity(city: any) {
     this.currentCity = city;
@@ -22,6 +23,10 @@ class BrandChoice {
     this.currentModel = model;
     console.log('this.currentModel >>> ', this.currentModel);
     
+  }
+
+  setRegisteredReq(id: any) {
+    this.registeredReqId = id;
   }
 
   constructor() {

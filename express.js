@@ -124,30 +124,6 @@ app.post('/reg_service/api/v1/request/registration', (req, res) => {
     code: req.body.city.code,
     name: req.body.city.name
   };
-  // currentRequest.status.code = 'PROCESSING';
   res.send(currentRequest);
-  setTimeout(() => changingStatus(), 10000);
+  setTimeout(() => changingStatus(), 5000);
 })
-// app.post('/reg_service/api/v1/request/registration', (req, res) => {
-//   currentRequest.person = {
-//     lastName: req.body.lastName,
-//     firstName: req.body.firstName,
-//     secondName: req.body.secondName,
-//     driverLicense: req.body.driverLicense,
-//     email: req.body.email
-//   };
-//   currentRequest.auto = {
-//     brand: req.body.brand,
-//     model: {
-//       id: req.body.model.id,
-//       name: req.body.model.name
-//     }
-//   };
-//   currentRequest.city = {
-//     code: req.body.city.code,
-//     name: req.body.city.name
-//   };
-//   currentRequest.status.code = 'PROCESSING';
-//   res.send(currentRequest);
-//   // changingStatus(req.body.id);
-// })

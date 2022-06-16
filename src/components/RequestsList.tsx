@@ -22,11 +22,16 @@ const ListItem = ({ code, id, brand, model, date }: any) => {
     "PROCESSING": {
       img: Sync,
       description: "В обработке",
-      link: "/DRAFT"
+      link: "/Loading"
     }
     
   }
-
+  // useEffect(() => {
+  //   if (code === "PROCESSING") {
+  //     const 
+  //   }
+  // })
+  
   const handleClick = () => {
     
     //Этот метод удалить позже

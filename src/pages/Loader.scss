@@ -1,0 +1,19 @@
+$top: calc(50% - 120px);
+$left: calc(50% - 120px);
+.loader {
+  position: fixed;
+  top: $top;
+  left: $left;
+  animation-name: rotating;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
