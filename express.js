@@ -77,10 +77,6 @@ app.post('/reg_service/api/v1/request', (req, res) => {
   res.send(currentRequest);
 })
 
-const changingStatus = (id) => {
-  setTimeout(() => requestsList[id-1].status.code = 'SUCCESS', 10000)
-}
-
 app.put('/reg_service/api/v1/request', (req, res) => {
   currentRequest.person = {
     lastName: req.body.lastName,
@@ -103,30 +99,34 @@ app.put('/reg_service/api/v1/request', (req, res) => {
   res.send(currentRequest);
 })
 
+const changingStatus = () => {
+  currentRequest.status.code = 'SUCCESS';
+}
+
 app.post('/reg_service/api/v1/request/registration', (req, res) => {
-  const registeredRequest = requestsList.find(item => item.id == req.body.id);
-  registeredRequest.status.code = 'PROCESSING';
-  registeredRequest.person = {
+  const currentRequest = requestsList.find(item => item.id == req.body.id);
+  currentRequest.status.code = 'PROCESSING';
+  currentRequest.person = {
     lastName: req.body.lastName,
     firstName: req.body.firstName,
     secondName: req.body.secondName,
     driverLicense: req.body.driverLicense,
     email: req.body.email
   };
-  registeredRequest.auto = {
+  currentRequest.auto = {
     brand: req.body.brand,
     model: {
       id: req.body.model.id,
       name: req.body.model.name
     }
   };
-  registeredRequest.city = {
+  currentRequest.city = {
     code: req.body.city.code,
     name: req.body.city.name
   };
-  registeredRequest.status.code = 'PROCESSING';
-  res.send(registeredRequest);
-  // changingStatus(req.body.id);
+  // currentRequest.status.code = 'PROCESSING';
+  res.send(currentRequest);
+  setTimeout(() => changingStatus(), 10000);
 })
 // app.post('/reg_service/api/v1/request/registration', (req, res) => {
 //   currentRequest.person = {

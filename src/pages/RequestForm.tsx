@@ -24,7 +24,23 @@ const RequestForm = observer(() => {
     handleSubmit,
     setValue
   } = useForm({
-    mode: "onChange"
+    mode: "onSubmit",
+    defaultValues: {
+      lastName: '',
+      firstName: '',
+      secondName: '',
+      email: '',
+      driverLicense: '',
+      city: {
+        name: '',
+        code: ''
+      },
+      brand: '',
+      model: {
+        name: '',
+        id: ''
+      }
+    }
   });
   
   console.log('myBrand.requestObject (form) >> ', toJS(myBrand.requestObject));
