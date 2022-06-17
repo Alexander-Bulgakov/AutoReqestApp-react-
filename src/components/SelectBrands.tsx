@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 
 const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
 
@@ -16,14 +16,14 @@ const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
   }, [currentBrand]);
 
   useEffect(() => {
-    myBrand.getBrandsFromAPI('/reg_service/api/v1/dictionary/DICT_AUTO')
+    myStore.getBrandsFromAPI('/reg_service/api/v1/dictionary/DICT_AUTO')
     .then(obj => {
       setBrands(Object.keys(obj));
     })
   }, []);
 
   useEffect(() => {
-    myBrand.setBrand(value);
+    myStore.setBrand(value);
   }, [value])
 
   const handleChange = (event: SelectChangeEvent) => {

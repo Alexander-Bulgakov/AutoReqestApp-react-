@@ -2,19 +2,19 @@ import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import RequestsList from '../components/RequestsList';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 
 const Requests = (): JSX.Element => {
 
-  useEffect(() => myBrand.setRequestId(null));
+  useEffect(() => myStore.setRequestId(null));
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void =>  {
     // если не найдена заявка в статусе PROCESSING
-    if (!myBrand.successReq){
-      myBrand.createRequestDraft('/reg_service/api/v1/request', {})
+    if (!myStore.successReq){
+      myStore.createRequestDraft('/reg_service/api/v1/request', {})
         .then(req => {
-          // myBrand.setRequestObject(req.data);
-          myBrand.setRequestId(req.data.id);
+          // myStore.setRequestObject(req.data);
+          myStore.setRequestId(req.data.id);
         });
     } else {
       // если найдена заявка в статусе PROCESSING

@@ -1,7 +1,7 @@
 // import { Button } from '@mui/material';
 import React, { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 import Loader from '../icons/Loader.svg';
 import axios from 'axios';
 import './Loader.scss';
@@ -12,7 +12,7 @@ const Loading = () => {
   const navigate = useNavigate();
   
   const statusRequest = async () => {
-    await axios.get('/reg_service/api/v1/request/status/' + myBrand.registeredReqId)
+    await axios.get('/reg_service/api/v1/request/status/' + myStore.registeredReqId)
     .then(req => {
       if (req.data === 'SUCCESS') {
         navigate('/');

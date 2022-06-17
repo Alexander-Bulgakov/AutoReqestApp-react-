@@ -1,7 +1,7 @@
 import axios from "axios";
 import { makeAutoObservable, toJS } from "mobx";
 
-class BrandChoice {
+class MainStore {
   brand = ''
   autoDict: any = {}
   license: any = ''
@@ -143,5 +143,5 @@ class BrandChoice {
     return request;
   }
 }
-export const myBrand = new BrandChoice();
+export const myStore = new MainStore();
 

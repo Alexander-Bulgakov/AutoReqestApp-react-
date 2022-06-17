@@ -3,7 +3,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 import { City } from '../types/types';
 
 
@@ -13,11 +13,11 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
   const [items, setItems] = useState<City[]>([]);
 
   useEffect(() => {
-    setCity(myBrand.currentCity);
-  }, [myBrand.currentCity]);
+    setCity(myStore.currentCity);
+  }, [myStore.currentCity]);
 
   useEffect(() => {
-    myBrand.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
+    myStore.getCitiesFromAPI('/reg_service/api/v1/dictionary/DICT_CITIES')
     .then(res => setItems(res));
   }, []);
 

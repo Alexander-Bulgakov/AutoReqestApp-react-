@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 import ListItem from './ListItem';
 import './RequestsListItem.scss';
 
@@ -8,8 +8,11 @@ const RequestsList = (): JSX.Element => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    myBrand.getRequestsFromAPI('/reg_service/api/v1/requests')
-      .then(res => setRequests(res.data));
+    myStore.getRequestsFromAPI('/reg_service/api/v1/requests')
+      .then(res => {
+        console.log('itemList res.data >>> ', res.data)
+        setRequests(res.data)
+      });
   }, [])
 
   return(

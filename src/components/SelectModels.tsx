@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { observer } from 'mobx-react-lite';
 import { MenuItem } from '@mui/material';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 import { toJS } from 'mobx';
 import { Auto } from '../types/types';
 
@@ -14,18 +14,18 @@ const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
   const [model, setModel] = useState('');
   const [models, setModels] = useState<Auto[]>([]);
 
-  console.log('myBrand.currentModel >> ', myBrand.currentModel);
+  console.log('myStore.currentModel >> ', myStore.currentModel);
   console.log('model >> ', model);
 
   useEffect(() => {
-    setModel(myBrand.currentModel);
-  }, [myBrand.currentModel]);
+    setModel(myStore.currentModel);
+  }, [myStore.currentModel]);
   
   useEffect(() => {
-    const obj = toJS(myBrand.autoDict);
-    const arr = obj[myBrand.brand];
+    const obj = toJS(myStore.autoDict);
+    const arr = obj[myStore.brand];
     setModels(arr);
-  }, [myBrand.brand]);
+  }, [myStore.brand]);
 
   useEffect(() => {
     console.log('models >>> ', models)

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Button, Checkbox, TextField, createTheme, ThemeProvider, FormControlLabel } from '@mui/material';
-import { myBrand } from '../store/selectBrand.store';
+import { myStore } from '../store/MyStore.store';
 import SelectCity from '../components/SelectCity';
 import SelectBrands from '../components/SelectBrands';
 import SelectModels from '../components/SelectModels';
@@ -44,10 +44,10 @@ const RequestForm = observer(() => {
     defaultValues: defaultValues
   });
   
-  console.log('myBrand.requestObject (form) >> ', toJS(myBrand.requestObject));
+  console.log('myStore.requestObject (form) >> ', toJS(myStore.requestObject));
   useEffect(() => {
 
-    myBrand.getRequestFromApi('/reg_service/api/v1/request/' + myBrand.reqId)
+    myStore.getRequestFromApi('/reg_service/api/v1/request/' + myStore.reqId)
       .then(req => req.data)
       .then(data => {
         console.log('getRequestFromApi >>> ', data);        
@@ -57,26 +57,26 @@ const RequestForm = observer(() => {
         setValue('email', data.person.email);
         setValue('driverLicense', data.person.driverLicense);
         setValue('city.name', data.city.name);
-        myBrand.setCity(data.city.name);
+        myStore.setCity(data.city.name);
         setValue('brand', data.auto.brand);
         setBrand(data.auto.brand);
         setValue('model.name', data.auto.model.name);
-        myBrand.setModel(data.auto.model.name);
+        myStore.setModel(data.auto.model.name);
       });
       
-  }, [myBrand.requestObject]);
+  }, [myStore.requestObject]);
 
   const onSubmit = (data: any) => {
     if (clickedButton === 'saveButton') {
       console.log('onSubmit save data >>> ', data);
-      myBrand.updateRequest('/reg_service/api/v1/request', data)
+      myStore.updateRequest('/reg_service/api/v1/request', data)
       .then(req => console.log('req', req));
       navigate('/');
     } else {
       console.log('onRegistration save data >>> ', data);
-      data.id = myBrand.reqId;
-      myBrand.setRegisteredReq(data.id);
-      myBrand.registrationRequest('reg_service/api/v1/request/registration', data)
+      data.id = myStore.reqId;
+      myStore.setRegisteredReq(data.id);
+      myStore.registrationRequest('reg_service/api/v1/request/registration', data)
       .then(res => console.log('registrationRequest >>> ', res));
       navigate('/Loading');
     }
