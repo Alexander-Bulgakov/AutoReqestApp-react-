@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "server": "json-server -w ./server/cities.json --port 3000",
-    "mock": "nodemon express.js",
+    "mock": "nodemon server/express.js",
     "clean": "rimraf ./dist",
     "start": "npm run clean & webpack-dev-server --config ./webpack/webpack.config.dev.js",
     "build": "npm run clean & webpack --config ./webpack/webpack.config.prod.js",

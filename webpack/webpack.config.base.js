@@ -52,6 +52,9 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './index.html' }),
+    new HtmlWebpackPlugin({ 
+      template: './index.html',
+      favicon: './src/icons/SiteLabel.svg'
+    }),
   ],
 };

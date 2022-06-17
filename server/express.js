@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-const requests = require('./server/request.json');
+// const requests = require('./server/request.json');
 const requestsList = [];
 
 const port = 3000;
@@ -19,11 +19,13 @@ app.listen(port, () => {
 })
 
 app.get('/reg_service/api/v1/dictionary/DICT_CITIES', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'server', 'cities.json'));
+  res.sendFile(path.resolve(__dirname, 'cities.json'));
+  // res.sendFile(path.resolve(__dirname, 'server', 'cities.json'));
 })
 
 app.get('/reg_service/api/v1/dictionary/DICT_AUTO', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'server', 'auto.json'));
+  res.sendFile(path.resolve(__dirname, 'auto.json'));
+  // res.sendFile(path.resolve(__dirname, 'server', 'auto.json'));
 })
 
 app.get('/reg_service/api/v1/requests', (req, res) => {
@@ -125,5 +127,5 @@ app.post('/reg_service/api/v1/request/registration', (req, res) => {
     name: req.body.city.name
   };
   res.send(currentRequest);
-  setTimeout(() => changingStatus(), 5000);
+  setTimeout(() => changingStatus(), 2000);
 })

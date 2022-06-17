@@ -1,6 +1,6 @@
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { myBrand } from '../store/selectBrand.store';
 import Loader from '../icons/Loader.svg';
 import axios from 'axios';
@@ -30,9 +30,9 @@ const Loading = () => {
 
   return (
     <div className="main-container">
-      <Link to="/">
+      {/* <Link to="/">
         <Button variant="contained">К списку заявок</Button>
-      </Link>
+      </Link> */}
       <img src={Loader} alt="Ожидание подтверждения заявки" className="loader" />
     </div>
   );

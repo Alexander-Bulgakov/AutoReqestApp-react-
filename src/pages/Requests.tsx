@@ -8,8 +8,8 @@ const Requests = (): JSX.Element => {
 
   useEffect(() => myBrand.setRequestId(null));
 
-  const handleClick = (e: any) => {
-    // если не найдена заявка в статусе SUCCESS
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void =>  {
+    // если не найдена заявка в статусе PROCESSING
     if (!myBrand.successReq){
       myBrand.createRequestDraft('/reg_service/api/v1/request', {})
         .then(req => {
@@ -17,8 +17,8 @@ const Requests = (): JSX.Element => {
           myBrand.setRequestId(req.data.id);
         });
     } else {
-      // если найдена заявка в статусе SUCCESS
-      e.preventDefault();
+      // если найдена заявка в статусе PROCESSING
+      event.preventDefault();
     }
   }
     

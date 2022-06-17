@@ -4,12 +4,12 @@ $left: calc(50% - 120px);
   position: fixed;
   top: $top;
   left: $left;
-  animation-name: rotating;
+  animation-name: rotation;
   animation-duration: 3s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-@keyframes rotating {
+@keyframes rotation {
   from {
     transform: rotate(0deg);
   }

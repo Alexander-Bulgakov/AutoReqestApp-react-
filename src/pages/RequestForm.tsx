@@ -1,15 +1,15 @@
 import React, { useEffect, useState} from 'react';
-import { Button, Checkbox, TextField, createTheme, ThemeProvider, FormControlLabel } from '@mui/material';
-import SelectCity from '../components/SelectCity';
+import { toJS } from 'mobx';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { Button, Checkbox, TextField, createTheme, ThemeProvider, FormControlLabel } from '@mui/material';
+import { myBrand } from '../store/selectBrand.store';
+import SelectCity from '../components/SelectCity';
 import SelectBrands from '../components/SelectBrands';
 import SelectModels from '../components/SelectModels';
-import { useForm } from 'react-hook-form';
-import './RequestForm.scss';
 import MaskedInput from '../components/MaskedInput';
-import { myBrand } from '../store/selectBrand.store';
-import { toJS } from 'mobx';
-import { useNavigate } from 'react-router-dom';
+import './RequestForm.scss';
 
 const defaultValues = {
   lastName: '',
@@ -242,9 +242,7 @@ const RequestForm = observer(() => {
           control={<Checkbox required />} 
           label="Согласен на обработку персональных данных" 
           className="checkbox" />
-        {/* <Link to="/"> */}
         <Button type="submit" variant="contained" onClick={() => handleClick('saveButton')}>Сохранить</Button>
-        {/* </Link> */}
         <Button type="submit" variant="contained" onClick={() => handleClick('registerButton')}>Отправить на регистрацию</Button>
       </form>
       </ThemeProvider>

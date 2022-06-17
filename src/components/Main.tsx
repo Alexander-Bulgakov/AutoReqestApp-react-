@@ -1,13 +1,11 @@
 import React from 'react';
-import './Main.scss';
-
 import { Routes, Route } from 'react-router-dom';
-
+import Loading from '../pages/Loader';
+import NotFound from '../pages/NotFound';
 import RequestForm from '../pages/RequestForm';
 import Requests from '../pages/Requests';
-import NotFound from '../pages/NotFound';
 import SuccessRequestPage from '../pages/SuccessRequest';
-import Loading from '../pages/Loader';
+import './Main.scss';
 
 const Main = (): JSX.Element => {
   return (
