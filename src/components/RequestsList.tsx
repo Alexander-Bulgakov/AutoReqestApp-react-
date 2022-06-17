@@ -7,10 +7,18 @@ const RequestsList = (): JSX.Element => {
   
   const [requests, setRequests] = useState([]);
 
+  let processingReq;
+
   useEffect(() => {
     myStore.getRequestsFromAPI('/reg_service/api/v1/requests')
       .then(res => {
-        console.log('itemList res.data >>> ', res.data)
+        console.log('itemList res.data >>> ', res.data);
+        // debugger;
+        processingReq = res.data.find((item: any) => item.status.code === 'PROCESSING');
+        console.log('processingReq >>> ', processingReq);
+        
+        if (processingReq) myStore.setProcessing();
+        // myStore.setRequests(res.data);
         setRequests(res.data)
       });
   }, [])

@@ -1,26 +1,35 @@
-import React, { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Button, Popover, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import RequestsList from '../components/RequestsList';
 import { myStore } from '../store/MyStore.store';
 
 const Requests = (): JSX.Element => {
 
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const navigate = useNavigate();
+
+  const openPopover = Boolean(anchorEl);
+  const id = openPopover ? 'button-popover' : undefined;
+
   useEffect(() => myStore.setRequestId(null));
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void =>  {
     // если не найдена заявка в статусе PROCESSING
-    if (!myStore.successReq){
+    if (!myStore.processingReq){
       myStore.createRequestDraft('/reg_service/api/v1/request', {})
         .then(req => {
           // myStore.setRequestObject(req.data);
           myStore.setRequestId(req.data.id);
         });
+      navigate('/DRAFT')
     } else {
-      // если найдена заявка в статусе PROCESSING
+      setAnchorEl(event.currentTarget);
       event.preventDefault();
     }
   }
+
+  const handleClose = () => setAnchorEl(null);
     
   return (
     <div className="content-container">
@@ -29,9 +38,18 @@ const Requests = (): JSX.Element => {
         <p className="main-header__description">Ваши заявки на покупку автомобилей</p>
       </div>
       <RequestsList />
-      <Link to="/DRAFT">
-        <Button variant="contained" onClick={handleClick}>Создать заявку</Button>
-      </Link>
+      <Button aria-describedby={id} variant="contained" onClick={handleClick}>Создать заявку</Button>
+      <Popover 
+        id={id} 
+        open={openPopover}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
+        <Typography>Одна заявка уже в обработке</Typography>
+      </Popover>
     </div>
   );
 }

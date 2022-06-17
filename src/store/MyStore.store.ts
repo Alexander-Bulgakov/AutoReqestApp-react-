@@ -12,8 +12,17 @@ class MainStore {
   requestObject: any = {}
   reqId: string | null = ''
   // formObject: any = {}
-  successReq = false
+  processingReq = false
   registeredReqId = ''
+
+  
+  constructor() {
+    makeAutoObservable(this);
+  }
+  
+  setProcessing() {
+    this.processingReq = true;
+  }
 
   setCity(city: any) {
     this.currentCity = city;
@@ -27,10 +36,6 @@ class MainStore {
 
   setRegisteredReq(id: any) {
     this.registeredReqId = id;
-  }
-
-  constructor() {
-      makeAutoObservable(this);
   }
 
   async getCitiesFromAPI(url: string) {
