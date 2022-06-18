@@ -10,9 +10,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Loading = () => {
   const navigate = useNavigate();
+
+  const regReq = myStore.registeredReqId;
+
+  console.log('regReq >>> ', regReq);
+  
   
   const statusRequest = async () => {
-    await axios.get('/reg_service/api/v1/request/status/' + myStore.registeredReqId)
+    await axios.get('/reg_service/api/v1/request/status/' + regReq)
     .then(req => {
       if (req.data === 'SUCCESS') {
         navigate('/');

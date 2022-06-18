@@ -127,5 +127,5 @@ app.post('/reg_service/api/v1/request/registration', (req, res) => {
     name: req.body.city.name
   };
   res.send(currentRequest);
-  setTimeout(() => changingStatus(), 50000);
+  setTimeout(() => changingStatus(), 5000);
 })

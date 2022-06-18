@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { toJS } from 'mobx';
+// import { toJS } from 'mobx';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -44,7 +44,7 @@ const RequestForm = observer(() => {
     defaultValues: defaultValues
   });
   
-  console.log('myStore.requestObject (form) >> ', toJS(myStore.requestObject));
+  // console.log('myStore.requestObject (form) >> ', toJS(myStore.requestObject));
   useEffect(() => {
 
     myStore.getRequestFromApi('/reg_service/api/v1/request/' + myStore.reqId)
@@ -64,7 +64,7 @@ const RequestForm = observer(() => {
         myStore.setModel(data.auto.model.name);
       });
       
-  }, [myStore.requestObject]);
+  }, []);
 
   const onSubmit = (data: any) => {
     if (clickedButton === 'saveButton') {

@@ -15,11 +15,9 @@ const Requests = (): JSX.Element => {
   useEffect(() => myStore.setRequestId(null));
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void =>  {
-    // если не найдена заявка в статусе PROCESSING
     if (!myStore.processingReq){
       myStore.createRequestDraft('/reg_service/api/v1/request', {})
         .then(req => {
-          // myStore.setRequestObject(req.data);
           myStore.setRequestId(req.data.id);
         });
       navigate('/DRAFT')

@@ -27,13 +27,10 @@ const statusObj: any = {
 const ListItem = ({ code, id, brand, model, date }: any): JSX.Element => {
 
   const handleClick = () => {
-    //Этот метод удалить позже
     myStore.setRequestId(id);
-    // myStore.getRequestFromApi('/reg_service/api/v1/request/' + id)
-    //   .then(req => {
-    //     myStore.setRequestObject(req.data);
-    //   });
-    myStore.setItemObject(id, brand, model, date);
+    if (code === "SUCCESS") {
+      myStore.setSuccessObject(id, brand, model, date);
+    }
   }
 
   return (

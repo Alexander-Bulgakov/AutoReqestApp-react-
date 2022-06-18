@@ -8,18 +8,22 @@ class MainStore {
   models: any = []
   currentCity = ''
   currentModel = ''
-  itemObject: any = {}
+  successObject: any = {}
   requestObject: any = {}
   reqId: string | null = ''
   // formObject: any = {}
   processingReq = false
   registeredReqId = ''
 
+  requests: any = []
   
   constructor() {
     makeAutoObservable(this);
   }
   
+  setRequests(data: any) {
+    this.requests = data;
+  }
   setProcessing() {
     this.processingReq = true;
   }
@@ -78,11 +82,11 @@ class MainStore {
     this.autoDict = obj;
   }
 
-  setItemObject(id: any, brand: any, model: any, date: any) {
-    this.itemObject.id = id;
-    this.itemObject.brand = brand;
-    this.itemObject.model = model;
-    this.itemObject.date = date;
+  setSuccessObject(id: any, brand: any, model: any, date: any) {
+    this.successObject.id = id;
+    this.successObject.brand = brand;
+    this.successObject.model = model;
+    this.successObject.date = date;
   }
 
   setRequestId(id: string | null){
