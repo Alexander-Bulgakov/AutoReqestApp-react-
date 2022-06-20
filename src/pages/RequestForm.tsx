@@ -11,22 +11,22 @@ import SelectModels from '../components/SelectModels';
 import MaskedInput from '../components/MaskedInput';
 import './RequestForm.scss';
 
-const defaultValues = {
-  lastName: '',
-  firstName: '',
-  secondName: '',
-  email: '',
-  driverLicense: '',
-  city: {
-    name: '',
-    code: ''
-  },
-  brand: '',
-  model: {
-    name: '',
-    id: ''
-  }
-}
+// const defaultValues = {
+//   lastName: '',
+//   firstName: '',
+//   secondName: '',
+//   email: '',
+//   driverLicense: '',
+//   city: {
+//     name: '',
+//     code: ''
+//   },
+//   brand: '',
+//   model: {
+//     name: '',
+//     id: ''
+//   }
+// }
 
 const RequestForm = observer(() => {
 
@@ -41,13 +41,12 @@ const RequestForm = observer(() => {
     setValue
   } = useForm({
     mode: "onSubmit",
-    defaultValues: defaultValues
+    // defaultValues: defaultValues
   });
   
-  // console.log('myStore.requestObject (form) >> ', toJS(myStore.requestObject));
   useEffect(() => {
 
-    myStore.getRequestFromApi('/reg_service/api/v1/request/' + myStore.reqId)
+    myStore.getRequestFromApi('/reg_service/api/v1/request/' + myStore.requestId)
       .then(req => req.data)
       .then(data => {
         console.log('getRequestFromApi >>> ', data);        
@@ -68,17 +67,15 @@ const RequestForm = observer(() => {
 
   const onSubmit = (data: any) => {
     if (clickedButton === 'saveButton') {
-      console.log('onSubmit save data >>> ', data);
+      data.id = myStore.requestId;
       myStore.updateRequest('/reg_service/api/v1/request', data)
-      .then(req => console.log('req', req));
-      navigate('/');
+      .then(() => navigate('/'));
     } else {
-      console.log('onRegistration save data >>> ', data);
-      data.id = myStore.reqId;
+      data.id = myStore.requestId;
       myStore.setRegisteredReq(data.id);
       myStore.registrationRequest('reg_service/api/v1/request/registration', data)
-      .then(res => console.log('registrationRequest >>> ', res));
-      navigate('/Loading');
+      .then(res => console.log('registrationRequest >>> ', res))
+      .then(() => navigate('/Loading'));
     }
   }
 
@@ -115,8 +112,7 @@ const RequestForm = observer(() => {
           InputProps={{
             disableUnderline: true
           }}
-          className="field form-container__input1"
-          // helperText={errors?.lastName ? errors.lastName.message : null}
+          className="field"
           error={!!errors?.lastName}
           sx={{ input: { bgcolor: "background.paper" } }}
           { ...register(
@@ -138,7 +134,7 @@ const RequestForm = observer(() => {
           }}
           label={errors?.firstName ? errors.firstName.message : null}
           placeholder="Имя"
-          className="field form-container__input2" 
+          className="field" 
           error={!!errors?.firstName}
           sx={{ input: { bgcolor: "background.paper" } }}
           { ...register(
@@ -161,7 +157,7 @@ const RequestForm = observer(() => {
           label={errors?.secondName ? errors.secondName.message : null}
           // label="Отчество" 
           placeholder="Отчество"
-          className="field form-container__input3"
+          className="field"
           sx={{ input: { bgcolor: "background.paper" } }}
           error={!!errors?.secondName}
           { ...register(
@@ -183,7 +179,7 @@ const RequestForm = observer(() => {
           }}
           label={errors?.email ? errors.email.message : null}
           placeholder="Email"
-          className="field form-container__input4" 
+          className="field" 
           sx={{ input: { bgcolor: "background.paper" } }}
           error={!!errors?.email}
           { ...register(
@@ -207,7 +203,7 @@ const RequestForm = observer(() => {
             disableUnderline: true,
             inputComponent: MaskedInput as any,
           }}
-          className="field form-container__input5" 
+          className="form-container__input-license" 
           value={inputValue}
           sx={{ input: { bgcolor: "background.paper" } }}
           { ...register(
@@ -226,7 +222,6 @@ const RequestForm = observer(() => {
           title="Город" 
           register={register}
           setValue={setValue}
-          // currentCity={city}
            />
         <SelectBrands 
           title="Марка автомобиля" 
@@ -236,7 +231,6 @@ const RequestForm = observer(() => {
           title="Модель" 
           register={register}
           setValue={setValue}
-          // currentModel={model} 
           />
         <FormControlLabel 
           control={<Checkbox required />} 

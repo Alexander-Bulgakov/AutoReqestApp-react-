@@ -9,12 +9,7 @@ module.exports = (env) => merge(baseConfig, {
     proxy: {
       '/': {
         target: 'http://localhost:3000',
-        // pathRewrite: { '/api': '' },
       }
-      // ' /reg_service/api/v1': {
-      //   target: 'http://localhost:3001',
-      //   pathRewrite: { '/reg_service/api/v1/': '' },
-      // }
     }
   },
 });

@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect} from 'react';
 import { myStore } from '../store/MyStore.store';
 import ListItem from './ListItem';
-import './RequestsListItem.scss';
+import './RequestsList.scss';
 
 const RequestsList = (): JSX.Element => {
   

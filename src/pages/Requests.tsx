@@ -3,6 +3,7 @@ import { Button, Popover, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import RequestsList from '../components/RequestsList';
 import { myStore } from '../store/MyStore.store';
+import './Requests.scss';
 
 const Requests = (): JSX.Element => {
 
@@ -19,8 +20,8 @@ const Requests = (): JSX.Element => {
       myStore.createRequestDraft('/reg_service/api/v1/request', {})
         .then(req => {
           myStore.setRequestId(req.data.id);
+          navigate('/DRAFT')
         });
-      navigate('/DRAFT')
     } else {
       setAnchorEl(event.currentTarget);
       event.preventDefault();

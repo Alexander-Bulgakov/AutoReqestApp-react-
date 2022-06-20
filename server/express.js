@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-// const requests = require('./server/request.json');
 const requestsList = [];
 
 const port = 3000;
@@ -34,16 +33,16 @@ app.get('/reg_service/api/v1/requests', (req, res) => {
 })
 
 app.get('/reg_service/api/v1/request/:id', (req, res) => {
-  const reqID =  req.params.id;
-  const currentReq = requestsList.find((item) => item.id == reqID);
-  // const currentReq = requests.find((item) => item.id == reqID);
+  const requestId =  req.params.id;
+  const currentReq = requestsList.find((item) => item.id == requestId);
+  // const currentReq = requests.find((item) => item.id == requestId);
   res.send(currentReq);
 })
 
 app.get('/reg_service/api/v1/request/status/:id', (req, res) => {
-  const reqID =  req.params.id;
-  const currentReq = requestsList.find((item) => item.id == reqID);
-  // const currentReq = requests.find((item) => item.id == reqID);
+  const requestId =  req.params.id;
+  const currentReq = requestsList.find((item) => item.id == requestId);
+  // const currentReq = requests.find((item) => item.id == requestId);
   const currentCode = currentReq.status.code;
   res.send(currentCode);
 })
@@ -127,5 +126,5 @@ app.post('/reg_service/api/v1/request/registration', (req, res) => {
     name: req.body.city.name
   };
   res.send(currentRequest);
-  setTimeout(() => changingStatus(), 5000);
+  setTimeout(() => changingStatus(), 2000);
 })

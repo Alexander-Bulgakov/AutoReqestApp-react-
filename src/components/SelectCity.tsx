@@ -44,7 +44,6 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
         className="select"
         labelId="demo-simple-select-label"
         value={defaultCity}
-        // defaultValue={defaultCity}
         label={title}
         onChange={handleChange}
         variant="filled"

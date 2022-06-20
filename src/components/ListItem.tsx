@@ -4,9 +4,7 @@ import { myStore } from '../store/MyStore.store';
 import Cloud from '../icons/Cloud.svg';
 import Success from '../icons/Success.svg';
 import Sync from '../icons/Sync.svg';
-import './RequestsListItem.scss';
 
-//сделать плоский список
 const statusObj: any = {
   "SUCCESS": {
     img: Success,

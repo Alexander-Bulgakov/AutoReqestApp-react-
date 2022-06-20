@@ -26,12 +26,6 @@ const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
     const arr = obj[myStore.brand];
     setModels(arr);
   }, [myStore.brand]);
-
-  useEffect(() => {
-    console.log('models >>> ', models)
-    // const currentModel = models.find(item => item.name == model);
-    // setValue('model.id', currentModel?.id);
-  }, [model]);
   
   const handleChange = (event: SelectChangeEvent) => {
     setModel(event.target.value);
