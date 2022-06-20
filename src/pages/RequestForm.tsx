@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-// import { toJS } from 'mobx';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -10,23 +9,6 @@ import SelectBrands from '../components/SelectBrands';
 import SelectModels from '../components/SelectModels';
 import MaskedInput from '../components/MaskedInput';
 import './RequestForm.scss';
-
-// const defaultValues = {
-//   lastName: '',
-//   firstName: '',
-//   secondName: '',
-//   email: '',
-//   driverLicense: '',
-//   city: {
-//     name: '',
-//     code: ''
-//   },
-//   brand: '',
-//   model: {
-//     name: '',
-//     id: ''
-//   }
-// }
 
 const RequestForm = observer(() => {
 
@@ -41,7 +23,6 @@ const RequestForm = observer(() => {
     setValue
   } = useForm({
     mode: "onSubmit",
-    // defaultValues: defaultValues
   });
   
   useEffect(() => {
@@ -49,8 +30,6 @@ const RequestForm = observer(() => {
     myStore.getRequestFromApi('/reg_service/api/v1/request/' + myStore.requestId)
       .then(req => req.data)
       .then(data => {
-        console.log('getRequestFromApi >>> ', data);
-        register('id', data.id);   
         setValue('lastName', data.person.lastName);
         setValue('firstName', data.person.firstName);
         setValue('secondName', data.person.secondName);
@@ -138,7 +117,6 @@ const RequestForm = observer(() => {
           sx={{ input: { bgcolor: "background.paper" } }}
           { ...register(
             "firstName", 
-            // "person.firstName", 
             { 
               required: "Обязательное поле",
               pattern: {
@@ -154,14 +132,12 @@ const RequestForm = observer(() => {
             disableUnderline: true
           }}
           label={errors?.secondName ? errors.secondName.message : null}
-          // label="Отчество" 
           placeholder="Отчество"
           className="field"
           sx={{ input: { bgcolor: "background.paper" } }}
           error={!!errors?.secondName}
           { ...register(
             "secondName",
-            // "person.secondName",
             { 
               pattern: {
                 value: /^[А-Яа-я]+$/i,

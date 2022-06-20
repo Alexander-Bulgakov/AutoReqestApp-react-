@@ -8,26 +8,26 @@ import { myStore } from '../store/MyStore.store';
 
 const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
 
-  const [value, setValue] = useState('');
-  const [autoBrands, setBrands] = useState<any>([]);
+  const [selectedBrand, setBrand] = useState('');
+  const [items, setItems] = useState<any>([]);
 
   useEffect(() => {
-    setValue(currentBrand);
+    setBrand(currentBrand);
   }, [currentBrand]);
 
   useEffect(() => {
     myStore.getBrandsFromAPI('/reg_service/api/v1/dictionary/DICT_AUTO')
     .then(obj => {
-      setBrands(Object.keys(obj));
+      setItems(Object.keys(obj));
     })
   }, []);
 
   useEffect(() => {
-    myStore.setBrand(value);
-  }, [value])
+    myStore.setBrand(selectedBrand);
+  }, [selectedBrand])
 
   const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value);
+    setBrand(event.target.value);
   };
 
   return (
@@ -41,14 +41,13 @@ const SelectBrands = ({ title, register, currentBrand }: any ): JSX.Element => {
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        value={value}
-        defaultValue=""
+        value={selectedBrand}
         label={title}
         onChange={handleChange}
         variant="filled"
         disableUnderline
       >
-        {autoBrands.map((model: string, index: number) => (
+        {items.map((model: string, index: number) => (
           <MenuItem key={index} value={model}>{model}</MenuItem>
           ))}
       </Select>

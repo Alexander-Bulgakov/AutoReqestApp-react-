@@ -1,20 +1,13 @@
-// import { Button } from '@mui/material';
 import React, { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
 import { myStore } from '../store/MyStore.store';
 import Loader from '../icons/Loader.svg';
-// import axios from 'axios';
 import './Loader.scss';
 import { useNavigate } from 'react-router-dom';
 
 
 const Loading = () => {
+
   const navigate = useNavigate();
-
-  // const regReq = myStore.registeredrequestId;
-
-  console.log('regReq >>> ', myStore.registeredrequestId);
-  
   
   const statusRequest = async () => {
     myStore.statusRequest('/reg_service/api/v1/request/status/' + myStore.registeredrequestId)

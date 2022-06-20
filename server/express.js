@@ -100,7 +100,7 @@ const changingStatus = () => {
 }
 
 app.post('/reg_service/api/v1/request/registration', (req, res) => {
-  const currentRequest = requestsList.find(item => item.id == req.body.id);
+  currentRequest = requestsList.find(item => item.id == req.body.id);
   currentRequest.status.code = 'PROCESSING';
   currentRequest.person = {
     lastName: req.body.lastName,

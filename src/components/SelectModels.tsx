@@ -11,8 +11,8 @@ import { Auto } from '../types/types';
 
 const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
   
-  const [model, setModel] = useState('');
-  const [models, setModels] = useState<Auto[]>([]);
+  const [selectedModel, setModel] = useState('');
+  const [items, setItems] = useState<Auto[]>([]);
 
   useEffect(() => {
     setModel(myStore.currentModel);
@@ -21,7 +21,7 @@ const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
   useEffect(() => {
     const obj = toJS(myStore.autoDict);
     const arr = obj[myStore.brand];
-    setModels(arr);
+    setItems(arr);
   }, [myStore.brand]);
   
   const handleChange = (event: SelectChangeEvent) => {
@@ -39,18 +39,17 @@ const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        value={model}
-        // defaultValue=""
+        value={selectedModel}
         label={title}
         onChange={handleChange}
         variant="filled"
         disableUnderline
       >
-        {models?.length && models.map((item: any) => (
+        {items?.length && items.map((item: any) => (
           <MenuItem 
             key={item.id} 
             value={item.name}
-            selected={item.name == model}
+            selected={item.name == selectedModel}
             >{item.name}</MenuItem>
         ))}
 

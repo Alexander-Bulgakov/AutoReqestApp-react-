@@ -9,7 +9,7 @@ import { City } from '../types/types';
 
 const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
   
-  const [defaultCity, setCity] = useState('');
+  const [selectedCity, setCity] = useState('');
   const [items, setItems] = useState<City[]>([]);
 
   useEffect(() => {
@@ -22,9 +22,9 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const currentCity = items.find(item => item.name == defaultCity);
+    const currentCity = items.find(item => item.name == selectedCity);
     setValue('city.code', currentCity?.code)
-  }, [defaultCity]);
+  }, [selectedCity]);
   
   const handleChange = (event: SelectChangeEvent) => {
     setCity(event.target.value as string);
@@ -41,7 +41,7 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
         sx={{ bgcolor: "background.paper" }}
         className="select"
         labelId="demo-simple-select-label"
-        value={defaultCity}
+        value={selectedCity}
         label={title}
         onChange={handleChange}
         variant="filled"
@@ -51,7 +51,7 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
           <MenuItem 
             key={city.code} 
             value={city.name} 
-            selected={city.name == defaultCity}
+            selected={city.name == selectedCity}
             >{city.name}</MenuItem>
         ))}
       </Select>

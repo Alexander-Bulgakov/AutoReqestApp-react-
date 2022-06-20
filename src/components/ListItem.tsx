@@ -35,20 +35,18 @@ const ListItem = ({ code, id, brand, model, date }: any): JSX.Element => {
   }
 
   return (
-    // <Link to={statusObj[code].link}  style={{ textDecoration: 'none' }} onClick={handleClick}>
-      <div className="requests-list__item" style={{ textDecoration: 'none' }} onClick={handleClick}>
-        <div className="requests-list__icon-container">
-          <img src={statusObj[code].img} className="requests-list__icon"/>
-        </div>
-        <div className="requests-list__text">
-          <h4 className="header">
-            Заявка №{id} на автомобиль {brand} {model}
-          </h4>
-          <p className="description">Статус: {statusObj[code].description}</p>
-          <p className="description">Дата: {new Date(date).toLocaleDateString()}</p>
-        </div>
+    <div className="requests-list__item" style={{ textDecoration: 'none' }} onClick={handleClick}>
+      <div className="requests-list__icon-container">
+        <img src={statusObj[code].img} className="requests-list__icon"/>
       </div>
-    // </Link>
+      <div className="requests-list__text">
+        <h4 className="header">
+          Заявка №{id} на автомобиль {brand} {model}
+        </h4>
+        <p className="description">Статус: {statusObj[code].description}</p>
+        <p className="description">Дата: {new Date(date).toLocaleDateString()}</p>
+      </div>
+    </div>
   )
 }
 

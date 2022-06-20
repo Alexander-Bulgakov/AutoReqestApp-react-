@@ -21,7 +21,6 @@ const RequestsList = (): JSX.Element => {
     <ul className="requests-list">
       {
         requests.map((request: any) => (
-        // myStore.requests.map((request: any) => (
           <li key={request.id}>
             <ListItem 
               code={request.status.code} 
