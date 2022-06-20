@@ -1,4 +1,4 @@
 
-//start develpment mode
-npm run mock
-npm run start
+//start develpment mode  
+npm run mock  
+npm run start  
