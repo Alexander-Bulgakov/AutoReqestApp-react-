@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 const Loading = () => {
   const navigate = useNavigate();
 
-  const regReq = myStore.registeredrequestId;
+  // const regReq = myStore.registeredrequestId;
 
-  console.log('regReq >>> ', regReq);
+  console.log('regReq >>> ', myStore.registeredrequestId);
   
   
   const statusRequest = async () => {
-    myStore.statusRequuest('/reg_service/api/v1/request/status/' + regReq)
+    myStore.statusRequest('/reg_service/api/v1/request/status/' + myStore.registeredrequestId)
     .then(req => {
       if (req.data === 'SUCCESS') {
         navigate('/');

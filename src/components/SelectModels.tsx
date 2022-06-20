@@ -14,9 +14,6 @@ const SelectModels = ({ title, register, setValue }: any ): JSX.Element => {
   const [model, setModel] = useState('');
   const [models, setModels] = useState<Auto[]>([]);
 
-  console.log('myStore.currentModel >> ', myStore.currentModel);
-  console.log('model >> ', model);
-
   useEffect(() => {
     setModel(myStore.currentModel);
   }, [myStore.currentModel]);

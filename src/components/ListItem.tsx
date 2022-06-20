@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { myStore } from '../store/MyStore.store';
 import Cloud from '../icons/Cloud.svg';
 import Success from '../icons/Success.svg';
@@ -24,16 +24,19 @@ const statusObj: any = {
 }
 const ListItem = ({ code, id, brand, model, date }: any): JSX.Element => {
 
-  const handleClick = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {    
     myStore.setRequestId(id);
     if (code === "SUCCESS") {
       myStore.setSuccessObject(id, brand, model, date);
     }
+    navigate(statusObj[code].link);
   }
 
   return (
-    <Link to={statusObj[code].link}  style={{ textDecoration: 'none' }} onClick={handleClick}>
-      <div className="requests-list__item">
+    // <Link to={statusObj[code].link}  style={{ textDecoration: 'none' }} onClick={handleClick}>
+      <div className="requests-list__item" style={{ textDecoration: 'none' }} onClick={handleClick}>
         <div className="requests-list__icon-container">
           <img src={statusObj[code].img} className="requests-list__icon"/>
         </div>
@@ -45,7 +48,7 @@ const ListItem = ({ code, id, brand, model, date }: any): JSX.Element => {
           <p className="description">Дата: {new Date(date).toLocaleDateString()}</p>
         </div>
       </div>
-    </Link>
+    // </Link>
   )
 }
 

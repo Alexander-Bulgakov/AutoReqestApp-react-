@@ -1,29 +1,27 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect} from 'react';
+import React, { useEffect, useState} from 'react';
 import { myStore } from '../store/MyStore.store';
 import ListItem from './ListItem';
 import './RequestsList.scss';
 
 const RequestsList = (): JSX.Element => {
-  
+  const [requests, setRequests] = useState([]);
   let processingReq;
 
   useEffect(() => {
     myStore.getRequestsFromAPI('/reg_service/api/v1/requests')
       .then(res => {
-        console.log('itemList res.data >>> ', res.data);
         processingReq = res.data.find((item: any) => item.status.code === 'PROCESSING');
-        console.log('processingReq >>> ', processingReq);
-        
         if (processingReq) myStore.setProcessing();
-        myStore.setRequests(res.data);
+        setRequests(res.data)
       });
   }, [])
 
   return(
     <ul className="requests-list">
       {
-        myStore.requests.map((request: any) => (
+        requests.map((request: any) => (
+        // myStore.requests.map((request: any) => (
           <li key={request.id}>
             <ListItem 
               code={request.status.code} 

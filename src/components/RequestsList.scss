@@ -1,6 +1,7 @@
 .requests-list {
   list-style-type: none;
   position: relative;
+  cursor: pointer;
   &__item {
     display: flex;
     flex-direction: row;

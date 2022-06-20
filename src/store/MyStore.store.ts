@@ -111,7 +111,7 @@ class MainStore {
     return request;
   }
 
-  async statusRequuest(url: string) {
+  async statusRequest(url: string) {
     const request = await axios.get(url);
     return request;
 

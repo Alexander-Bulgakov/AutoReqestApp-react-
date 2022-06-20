@@ -19,30 +19,25 @@ app.listen(port, () => {
 
 app.get('/reg_service/api/v1/dictionary/DICT_CITIES', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'cities.json'));
-  // res.sendFile(path.resolve(__dirname, 'server', 'cities.json'));
 })
 
 app.get('/reg_service/api/v1/dictionary/DICT_AUTO', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'auto.json'));
-  // res.sendFile(path.resolve(__dirname, 'server', 'auto.json'));
 })
 
 app.get('/reg_service/api/v1/requests', (req, res) => {
   res.send(requestsList);
-  // res.send(requests);
 })
 
 app.get('/reg_service/api/v1/request/:id', (req, res) => {
   const requestId =  req.params.id;
   const currentReq = requestsList.find((item) => item.id == requestId);
-  // const currentReq = requests.find((item) => item.id == requestId);
   res.send(currentReq);
 })
 
 app.get('/reg_service/api/v1/request/status/:id', (req, res) => {
   const requestId =  req.params.id;
   const currentReq = requestsList.find((item) => item.id == requestId);
-  // const currentReq = requests.find((item) => item.id == requestId);
   const currentCode = currentReq.status.code;
   res.send(currentCode);
 })
@@ -73,12 +68,12 @@ app.post('/reg_service/api/v1/request', (req, res) => {
     },
     createDate: new Date().toISOString()
   };
-  // requests.push(currentRequest);
   requestsList.push(currentRequest);
   res.send(currentRequest);
 })
 
 app.put('/reg_service/api/v1/request', (req, res) => {
+  currentRequest = requestsList.find(item => item.id == req.body.id);
   currentRequest.person = {
     lastName: req.body.lastName,
     firstName: req.body.firstName,

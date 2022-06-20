@@ -45,11 +45,12 @@ const RequestForm = observer(() => {
   });
   
   useEffect(() => {
-
+    
     myStore.getRequestFromApi('/reg_service/api/v1/request/' + myStore.requestId)
       .then(req => req.data)
       .then(data => {
-        console.log('getRequestFromApi >>> ', data);        
+        console.log('getRequestFromApi >>> ', data);
+        register('id', data.id);   
         setValue('lastName', data.person.lastName);
         setValue('firstName', data.person.firstName);
         setValue('secondName', data.person.secondName);
@@ -66,15 +67,13 @@ const RequestForm = observer(() => {
   }, []);
 
   const onSubmit = (data: any) => {
+    data.id = myStore.requestId;
     if (clickedButton === 'saveButton') {
-      data.id = myStore.requestId;
       myStore.updateRequest('/reg_service/api/v1/request', data)
       .then(() => navigate('/'));
     } else {
-      data.id = myStore.requestId;
       myStore.setRegisteredReq(data.id);
       myStore.registrationRequest('reg_service/api/v1/request/registration', data)
-      .then(res => console.log('registrationRequest >>> ', res))
       .then(() => navigate('/Loading'));
     }
   }

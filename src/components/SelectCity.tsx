@@ -27,8 +27,6 @@ const SelectCity = ({ title, register, setValue }: any ): JSX.Element => {
   }, [defaultCity]);
   
   const handleChange = (event: SelectChangeEvent) => {
-    const currentCity = items.find(item => item.name == event.target.value);
-    console.log('currentCity >>> ', currentCity)
     setCity(event.target.value as string);
   };
   
