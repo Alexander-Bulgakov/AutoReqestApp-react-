@@ -27,3 +27,8 @@ npm run start
 - React Hook Form;
 - Sass;
 - Material UI;
+
+|                                                                                                                                                 |                                                                                                                                                 |
+| :---------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img width="600px" alt="Main page" src="https://github.com/Alexander-Bulgakov/auto-reqests-react/blob/main/docs/screenshots/Screenshot_01.png"> | <img width="600px" alt="Main page" src="https://github.com/Alexander-Bulgakov/auto-reqests-react/blob/main/docs/screenshots/Screenshot_02.png"> |
+| <img width="600px" alt="Main page" src="https://github.com/Alexander-Bulgakov/auto-reqests-react/blob/main/docs/screenshots/Screenshot_03.png"> | <img width="600px" alt="Main page" src="https://github.com/Alexander-Bulgakov/auto-reqests-react/blob/main/docs/screenshots/Screenshot_04.png"> |
