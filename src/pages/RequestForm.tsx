@@ -72,7 +72,7 @@ const RequestForm = observer(() => {
     },
   });
 
-  const handleChangeInput = (event: any) => {
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 

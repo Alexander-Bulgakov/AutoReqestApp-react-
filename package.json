@@ -7,7 +7,7 @@
     "server": "json-server -w ./server/cities.json --port 3000",
     "mock": "nodemon server/express.js",
     "clean": "rimraf ./dist",
-    "start": "npm run clean & webpack-dev-server --config ./webpack/webpack.config.dev.js --open",
+    "start": "npm run mock & npm run clean & webpack-dev-server --config ./webpack/webpack.config.dev.js --open",
     "build": "npm run clean & webpack --config ./webpack/webpack.config.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .ts, .tsx"

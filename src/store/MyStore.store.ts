@@ -2,24 +2,24 @@ import axios from "axios";
 import { makeAutoObservable } from "mobx";
 
 class MainStore {
-  brand = ''
-  autoDict: any = {}
-  license: any = ''
-  models: any = []
-  currentCity = ''
-  currentModel = ''
-  successObject: any = {}
-  requestObject: any = {}
-  requestId: string | null = ''
-  processingReq: boolean = false
-  registeredrequestId: any = ''
+  brand = "";
+  autoDict: any = {};
+  license: any = "";
+  models: any = [];
+  currentCity = "";
+  currentModel = "";
+  successObject: any = {};
+  requestObject: any = {};
+  requestId: string | null = "";
+  processingReq: boolean = false;
+  registeredrequestId: any = "";
 
-  requests: any = []
-  
+  requests: any = [];
+
   constructor() {
     makeAutoObservable(this);
   }
-  
+
   setRequests(data: any) {
     this.requests = data;
   }
@@ -32,7 +32,7 @@ class MainStore {
   }
 
   setModel(model: any) {
-    this.currentModel = model;    
+    this.currentModel = model;
   }
 
   setRegisteredReq(id: any) {
@@ -40,27 +40,26 @@ class MainStore {
   }
 
   async getCitiesFromAPI(url: string) {
-      const result = await axios.get<Request, any>(url);
-      return result.data.items;
+    const result = await axios.get<Request, any>(url);
+    return result.data.items;
   }
 
   async getBrandsFromAPI(url: string) {
-    const result = await axios.get<any, any>(url)
-      .then(res => {
-        const obj: {} = res.data.reduce((acc: any, val: any) => {
-          const key = Object.keys(val)[0];
-          acc[key] = val[key];
-          return acc
-        }, {})
-        return obj
-      })
-      this.setAutoDict(result);
-      return result;
+    const result = await axios.get<any, any>(url).then((res) => {
+      const obj: {} = res.data.reduce((acc: any, val: any) => {
+        const key = Object.keys(val)[0];
+        acc[key] = val[key];
+        return acc;
+      }, {});
+      return obj;
+    });
+    this.setAutoDict(result);
+    return result;
   }
 
   async getRequestsFromAPI(url: string) {
-    const requests = await axios.get(url)
-    return requests
+    const requests = await axios.get(url);
+    return requests;
   }
 
   setLicense(value: any) {
@@ -82,8 +81,8 @@ class MainStore {
     this.successObject.date = date;
   }
 
-  setRequestId(id: string | null){
-    this.requestId = id;    
+  setRequestId(id: string | null) {
+    this.requestId = id;
   }
 
   setRequestObject(data: any) {
@@ -94,28 +93,26 @@ class MainStore {
     const request = await axios.get(url);
     return request;
   }
-  
+
   async createRequestDraft(url: string, data: {}) {
     const request = await axios.post(url, data);
     this.requestObject = request.data;
     return request;
   }
 
-  async updateRequest(url: string, data: {}) {    
+  async updateRequest(url: string, data: {}) {
     const request = await axios.put(url, data);
     return request;
   }
 
   async registrationRequest(url: string, data: {}) {
-    const request = await axios.post(url, data)
+    const request = await axios.post(url, data);
     return request;
   }
 
   async statusRequest(url: string) {
     const request = await axios.get(url);
     return request;
-
   }
 }
 export const myStore = new MainStore();
-
