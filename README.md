@@ -1,7 +1,7 @@
 **start develpment mode:**
 
 ```
- git clone https://github.com/Alexander-Bulgakov/auto-reqests-react.git
+git clone https://github.com/Alexander-Bulgakov/auto-reqests-react.git
 ```
 
 ```
